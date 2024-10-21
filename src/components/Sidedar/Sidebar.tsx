@@ -40,7 +40,7 @@ export default function Sidebar() {
                     <div className={styles['logo']}>
                         <img src="/logo.svg" alt="" />
                     </div>
-                    <p>GOYDA</p>
+                    <p>GameShop</p>
                 </div>
                 <div className={styles['menu']}>
                     <NavLink to='/auth/login' className={styles['menu__href']}>
@@ -92,7 +92,7 @@ export default function Sidebar() {
                             )
                         }
                     </NavLink>
-                    <NavLink to='/catalog' className={styles['menu__href']}>
+                    <NavLink to='/cart' className={styles['menu__href']}>
                         <div className={styles['menu__item']}>
                             <div className={styles['menu-icon']}>
                                 <ShoppingBasket className={styles['icon']} />

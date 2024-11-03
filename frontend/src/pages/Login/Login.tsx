@@ -8,7 +8,7 @@ import { ILoginForm } from './LoginForm.interface'
 export default function Login() {
 
     const {register, handleSubmit, formState} = useForm<ILoginForm>({
-        mode: 'onChange'
+        mode: 'onSubmit'
     });
 
     const onSubmit: SubmitHandler<ILoginForm> = (data) => {

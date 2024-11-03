@@ -1,5 +1,4 @@
 .main-layout{
-    display: grid;
     display: flex;
     flex-direction: row;
     gap: 40px;
@@ -8,4 +7,5 @@
 
 .page{
     padding: 25px 0px;
+    width: 100%;
 }

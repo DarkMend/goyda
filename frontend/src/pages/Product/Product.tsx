@@ -7,6 +7,7 @@ import ProductService from '../../services/product.service'
 import Loading from '../../components/Loading/Loading'
 import DeleteButton from '../../components/DeleteButton/DeleteButton'
 import EditButton from '../../components/EditButton/EditButton'
+import ModalLayout from '../../components/ModalLayout/ModalLayout'
 
 export default function Product() {
 
@@ -24,6 +25,11 @@ export default function Product() {
             {
                 isLoading ? <Loading /> :
                     <div>
+                        <ModalLayout>    position: absolute;
+                        position: absolute;
+                        position: absolute;
+                        position: absolute;
+                        </ModalLayout>
                         <div className={styles['title-wrapper']}>
                             <Title>{data?.name}</Title>
                             <div className={styles['admin-actions']}>

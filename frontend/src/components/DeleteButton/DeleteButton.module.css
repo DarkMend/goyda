@@ -1,0 +1,14 @@
+.delete-icon {
+    color: rgb(179, 0, 0);
+    width: 20px;
+    height: 20px;
+    transition: all .3s ease;
+}
+
+.delete:hover{
+    background: rgb(255, 167, 167) !important;
+}
+
+.delete:hover .delete-icon {
+    color: rgb(238, 0, 0);
+}

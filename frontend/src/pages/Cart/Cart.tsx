@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 import Title from '../../components/Title/Title';
 import styles from './Cart.module.css';
-import { Minus, Plus, Trash } from 'lucide-react';
+import { Minus, Plus } from 'lucide-react';
 import cn from 'classnames'
 import MainButton from '../../components/MainButton/MainButton';
+import DeleteButton from '../../components/DeleteButton/DeleteButton';
 
 export default function Cart() {
     return (
@@ -22,9 +23,7 @@ export default function Cart() {
                         </div>
                     </Link>
                     <div className={styles['cart-item__actions']}>
-                        <button className={styles['delete']}>
-                            <Trash className={styles['delete-icon']}/>
-                        </button>
+                        <DeleteButton />
                         <div className={styles['calc']}>
                             <button className={cn(styles['calc-button'], styles['min'])}>
                                 <Minus className={styles['calc-button__icon']}/>

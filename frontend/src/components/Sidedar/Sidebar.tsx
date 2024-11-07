@@ -80,7 +80,7 @@ export default function Sidebar() {
                                 )
                             }
                         </NavLink>
-                        <NavLink to='/catalog' className={styles['menu__href']}>
+                        <NavLink to='/products' className={styles['menu__href']}>
                             {
                                 ({ isActive }) => (
                                     <div className={cn(styles['menu__item'], {

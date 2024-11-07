@@ -90,31 +90,6 @@
     color: #2D2D36;
 }
 
-.delete-icon{
-    color: rgb(179, 0, 0);
-    width: 20px;
-    height: 20px;
-    transition: all .3s ease;
-}
-
-.delete{
-    display: block;
-    border: none;
-    padding: 10px 10px;
-    background: rgb(255, 255, 255);
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all .3s ease;
-}
-
-.delete:hover{
-    background: rgb(255, 167, 167);
-}
-
-.delete:hover .delete-icon{
-    color: rgb(238, 0, 0);
-}
-
 .result-button{
     width: 350px;
 }

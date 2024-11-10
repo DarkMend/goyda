@@ -19,7 +19,7 @@ export default function Catalog() {
             <div className={styles['catalog__wrapper']}>
                 {
                 isLoading ? <Loading /> :
-                data?.length && data.map((el:any) => <CardItem key={el} data={el}/>)}
+                data?.length && data.map((el:any) => <CardItem key={el.id} data={el}/>)}
             </div>
         </div>
     )

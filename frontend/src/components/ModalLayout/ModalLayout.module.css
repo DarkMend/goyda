@@ -9,6 +9,9 @@
     background: rgba(0, 0, 0, 0.495);
     top: 0;
     left: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .3s ease;
 }
 
 .content{
@@ -33,4 +36,9 @@
     background: none;
     border: none;
     margin-left: auto;
+}
+
+.modal.active{
+    opacity: 1;
+    visibility: visible;
 }

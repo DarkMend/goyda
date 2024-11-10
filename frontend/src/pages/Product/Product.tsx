@@ -8,10 +8,14 @@ import Loading from '../../components/Loading/Loading'
 import DeleteButton from '../../components/DeleteButton/DeleteButton'
 import EditButton from '../../components/EditButton/EditButton'
 import ModalLayout from '../../components/ModalLayout/ModalLayout'
+import { useDispatch } from 'react-redux'
+import { AppDispatch, store } from '../../store/store'
+import { modalActions } from '../../store/modal.slice'
 
 export default function Product() {
 
     const { productId } = useParams();
+    const dispatch = useDispatch<AppDispatch>();
 
     const { data, isLoading } = useQuery({
         queryKey: ['products', productId],
@@ -19,13 +23,17 @@ export default function Product() {
         select: (data) => data.data
     })
 
+    const openModal = () => {
+        dispatch(modalActions.setIsActive(!store.getState().modal.isActive))
+    }
 
     return (
         <>
             {
                 isLoading ? <Loading /> :
                     <div>
-                        <ModalLayout>    position: absolute;
+                        <ModalLayout>    
+                        position: absolute;
                         position: absolute;
                         position: absolute;
                         position: absolute;
@@ -34,7 +42,7 @@ export default function Product() {
                             <Title>{data?.name}</Title>
                             <div className={styles['admin-actions']}>
                                 <DeleteButton />
-                                <EditButton />
+                                <EditButton onClick={openModal} />
                             </div>
                         </div>
                         <div className={styles['product']}>

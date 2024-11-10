@@ -8,7 +8,7 @@ export default function Loading() {
                 color="#ffc400"
                 loading
                 size={35}
-                speedMultiplier={0}
+                speedMultiplier={2}
             />
         </div>
     )

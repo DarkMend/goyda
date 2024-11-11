@@ -4,7 +4,7 @@ import { IModalLayout } from './ModalLayout.props';
 import { X } from 'lucide-react';
 import cn from 'classnames';
 import { store } from '../../store/store';
-import { useEffect, useReducer } from 'react';
+import { MouseEventHandler, useEffect, useReducer } from 'react';
 import { useDispatch } from 'react-redux';
 import { modalActions } from '../../store/modal.slice';
 
@@ -25,10 +25,16 @@ export default function ModalLayout({ children }: IModalLayout) {
         dispatch(modalActions.setIsActive(!store.getState().modal.isActive))
     }
 
+    const closeClickModal: MouseEventHandler<HTMLDivElement> = (e) => {
+        if (e.target == e.currentTarget) {
+            dispatch(modalActions.setIsActive(!store.getState().modal.isActive))
+        }
+    }
+
     return createPortal(
         <div className={cn(styles['modal'], {
             [styles['active']]: store.getState().modal.isActive
-        })}>
+        })} onClick={(e) => closeClickModal(e)}>
             <div className={styles['content']}>
                 <div className={styles['close-wrapper']}>
                     <button className={styles['close']} onClick={closeModal}>

@@ -3,14 +3,13 @@ import styles from './Input.module.css'
 import { IInput } from './Input.props';
 import cn from 'classnames'
 
-const Input = forwardRef<HTMLInputElement, IInput>(({ type, id, title, value, ...props }, ref) => {
+const Input = forwardRef<HTMLInputElement, IInput>(({ type = 'text', id, title, value, ...props }, ref) => {
 
     const [labelActive, setLabelActive] = useState(false);
 
     function active(e: ChangeEvent<HTMLInputElement>) {
         if(!e.target.value){
             setLabelActive((state) => !state);
-            console.log(value)
         }
     }
 

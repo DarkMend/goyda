@@ -10,3 +10,11 @@
 .product-card{
     background: wheat;
 }
+
+.catalog-title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}

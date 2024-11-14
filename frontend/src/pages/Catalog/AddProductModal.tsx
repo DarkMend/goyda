@@ -8,6 +8,8 @@ import ProductService from "../../services/product.service";
 
 export default function AddProductModal() {
 
+    let errorValue = '';
+
     const { register, handleSubmit, formState: { errors } } = useForm<IProductForm>({
         mode: 'onChange',
     });
@@ -15,10 +17,14 @@ export default function AddProductModal() {
     const { mutate } = useMutation({
         mutationKey: ['add product'],
         mutationFn: async (data: IProductForm) => ProductService.addProduct(data),
+        onError: (error) => {
+            errorValue = error.message;
+        }
     })
 
     const addProductSubmit: SubmitHandler<IProductForm> = (data) => {
-        mutate(data);
+        const a = mutate(data);
+        console.log(a);
     }
 
     return (

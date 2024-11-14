@@ -1,15 +1,19 @@
-import axios from 'axios'
 import { IProduct } from '../interfaces/product.interface'
+import { axiosClassic } from '../api/interceptors'
+import { IProductForm } from '../interfaces/productForm.interface'
 
-const URL = 'http://127.0.0.1:8000/api';
 
 const ProductService = {
     async getProducts() {
-        return axios.get<IProduct[]>(`${URL}/products`)
+        return axiosClassic.get<IProduct[]>(`/products`)
     },
 
     async getProduct(id:any) {
-        return axios.get<IProduct>(`${URL}/products/${id}`)
+        return axiosClassic.get<IProduct>(`/products/${id}`)
+    },
+    
+    async addProduct(data: IProductForm){
+        return axiosClassic.post('/products', data)
     }
 }
 

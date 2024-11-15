@@ -5,10 +5,11 @@ import { IProductForm } from "../../interfaces/productForm.interface";
 import FormLayout from "../../components/FormLayout/FormLayout";
 import { useMutation } from "@tanstack/react-query";
 import ProductService from "../../services/product.service";
+import { useState } from "react";
 
 export default function AddProductModal() {
 
-    let errorValue = '';
+    const [errorValue, setErrorValue] = useState('');
 
     const { register, handleSubmit, formState: { errors } } = useForm<IProductForm>({
         mode: 'onChange',
@@ -16,15 +17,16 @@ export default function AddProductModal() {
 
     const { mutate } = useMutation({
         mutationKey: ['add product'],
-        mutationFn: async (data: IProductForm) => ProductService.addProduct(data),
+        mutationFn: (data: IProductForm) => ProductService.addProduct(data),
         onError: (error) => {
-            errorValue = error.message;
+            // setErrorValue(error.response.data.message)
+            // console.log(error);
+            
         }
     })
 
     const addProductSubmit: SubmitHandler<IProductForm> = (data) => {
-        const a = mutate(data);
-        console.log(a);
+        mutate(data);
     }
 
     return (
@@ -41,7 +43,7 @@ export default function AddProductModal() {
                 })} errorActive={errors.img && errors.img.message} />
                 <Input title="Цена" id="price" {...register('price', {
                     required: 'Заполните цену'
-                })} errorActive={errors.price && errors.price.message} />
+                })} errorActive={errors.price && errors.price.message || errorValue && errorValue} />
             </FormLayout>
         </ModalLayout>
     )

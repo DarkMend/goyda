@@ -13,7 +13,7 @@ const ProductService = {
     },
     
     async addProduct(data: IProductForm){
-        return axiosClassic.post('/products', data)
+        return axiosClassic.post<unknown>('/products', data)
     }
 }
 

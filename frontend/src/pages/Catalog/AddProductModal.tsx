@@ -24,7 +24,12 @@ export default function AddProductModal() {
   })
 
   const addProductSubmit: SubmitHandler<IProductForm> = (data) => {
-    mutate(data);
+    const formData = new FormData();
+    console.log(data['img'])
+    formData.append('img', data.img)
+    console.log(formData)
+    // mutate(data);
+    console.log(data);
   };
 
   return (
@@ -33,6 +38,7 @@ export default function AddProductModal() {
         onSubmit={handleSubmit(addProductSubmit)}
         title="Добавление товара"
         button="Добавить"
+        enctype={true}
       >
         <Input
           title="Название"
@@ -53,6 +59,7 @@ export default function AddProductModal() {
         <Input
           title="Картинка"
           id="img"
+          type="file"
           {...register("img", {
             required: "Заполните картинку",
           })}
@@ -61,8 +68,10 @@ export default function AddProductModal() {
         <Input
           title="Цена"
           id="price"
+          type="number"
           {...register("price", {
             required: "Заполните цену",
+            valueAsNumber: true
           })}
           errorActive={
             (errors.price && errors.price.message) || (errorValue && errorValue)

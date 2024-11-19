@@ -24,7 +24,7 @@ class ProductController extends Controller
         $validate = $request->validate([
             'name' => ['required'],
             'description' => ['required'],
-            'img' => ['required', 'mimes:png'],
+            'img' => ['required', 'mimes:jpg,jpeg,png'],
             'price' => ['required', 'integer']
         ]);
 

@@ -3,11 +3,12 @@ import Input from "../../components/Input/Input";
 import ModalLayout from "../../components/ModalLayout/ModalLayout";
 import { IProductForm } from "../../interfaces/productForm.interface";
 import FormLayout from "../../components/FormLayout/FormLayout";
-import { useState } from "react";
+import { ChangeEventHandler, useRef, useState } from "react";
 import { useCreateProduct } from "../../utils/hooks/Product/useCreateProduct";
 
 export default function AddProductModal() {
   const [errorValue, setErrorValue] = useState<string | undefined>("");
+  const [img, setImg] = useState('');
 
   const {
     register,
@@ -23,13 +24,17 @@ export default function AddProductModal() {
     },
   })
 
+  const changeImg: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setImg(e.target.files[0]);
+  }
+
   const addProductSubmit: SubmitHandler<IProductForm> = (data) => {
     const formData = new FormData();
-    console.log(data['img'])
-    formData.append('img', data.img)
-    console.log(formData)
-    // mutate(data);
-    console.log(data);
+
+    Object.entries(data).forEach(([el, value]) => el !== 'img' && formData.append(el, value));
+    formData.append('img', img);
+    console.log(...formData);
+    mutate(formData);
   };
 
   return (
@@ -60,9 +65,10 @@ export default function AddProductModal() {
           title="Картинка"
           id="img"
           type="file"
-          {...register("img", {
-            required: "Заполните картинку",
-          })}
+          onChange={changeImg}
+          // {...register("img", {
+          //   required: "Заполните картинку",
+          // })}
           errorActive={errors.img && errors.img.message}
         />
         <Input

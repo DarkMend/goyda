@@ -1,6 +1,6 @@
 export interface IProductForm {
     name: string,
     description: string,
-    img: Blob,
+    img: any,
     price: number
 }

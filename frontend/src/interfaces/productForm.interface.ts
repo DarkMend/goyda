@@ -1,6 +1,6 @@
 export interface IProductForm {
     name: string,
     description: string,
-    img: any,
+    img: FileList,
     price: number
 }

@@ -28,7 +28,7 @@ export default function AddProductModal() {
 
     Object.entries(data).forEach(([el, value]) => el !== 'img' && formData.append(el, value));
     formData.append('img', data.img[0]);
-    console.log(...formData);
+
     mutate(formData);
   };
 

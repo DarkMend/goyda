@@ -16,7 +16,7 @@ export default function Catalog() {
     const { data, isLoading } = useQuery({
         queryKey: ['products'],
         queryFn: ProductService.getProducts,
-        select: (data) => data.data
+        select: ({data}) => data.data
     });
 
     const openModal = () => {

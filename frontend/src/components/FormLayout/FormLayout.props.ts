@@ -5,5 +5,5 @@ export interface IFormLayout {
     children: ReactNode,
     button: string,
     onSubmit: () => void,
-    enctype?: boolean
+    disabled?: boolean
 }

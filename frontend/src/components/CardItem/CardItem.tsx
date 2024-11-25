@@ -8,7 +8,7 @@ export default function CardItem({data}: ICatdItem) {
     return (
         <div className={styles['card']}>
             <div className={styles['card-img']}>
-                <img src="/card1.jpg" alt="" />
+                <img src={data.img} alt="" />
             </div>
             <div className={styles['title']}>
                 {data.name}

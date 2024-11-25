@@ -1,11 +1,11 @@
-import { IProduct } from '../interfaces/product.interface'
+import { IProduct, IProducts } from '../interfaces/product.interface'
 import { axiosClassic } from '../api/interceptors'
 // import { IProductForm } from '../interfaces/productForm.interface'
 
 
 const ProductService = {
     async getProducts() {
-        return axiosClassic.get<IProduct[]>(`/products`)
+        return axiosClassic.get<IProducts>(`/products`)
     },
 
     async getProduct(id: any) {

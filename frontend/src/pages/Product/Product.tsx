@@ -48,7 +48,7 @@ export default function Product() {
                         <div className={styles['product']}>
                             <div className={styles['product-slider']}>
                                 <div className={styles['product-img']}>
-                                    <img src="/card1.jpg" alt="" />
+                                    <img src={data?.img} alt="" />
                                 </div>
                             </div>
                             <div className={styles['product-info']}>

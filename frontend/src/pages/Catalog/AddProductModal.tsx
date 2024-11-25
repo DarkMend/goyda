@@ -3,33 +3,45 @@ import Input from "../../components/Input/Input";
 import ModalLayout from "../../components/ModalLayout/ModalLayout";
 import { IProductForm } from "../../interfaces/productForm.interface";
 import FormLayout from "../../components/FormLayout/FormLayout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCreateProduct } from "../../utils/hooks/Product/useCreateProduct";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function AddProductModal() {
   const [errorValue, setErrorValue] = useState<string | undefined>("");
+  const queryClient = useQueryClient();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm<IProductForm>({
     mode: "onChange",
   });
 
-  const { mutate } = useCreateProduct({
+  const { mutate, isPending } = useCreateProduct({
+    onSuccess(){
+      reset()
+    },
     onError(error) {
         setErrorValue(error.response?.data?.message);
     },
   })
 
   const addProductSubmit: SubmitHandler<IProductForm> = (data) => {
+    if(isPending) return
+
     const formData = new FormData();
 
     Object.entries(data).forEach(([el, value]) => el !== 'img' && formData.append(el, value));
     formData.append('img', data.img[0]);
-    mutate(formData);
+    mutate(formData)
   };
+
+  useEffect(() => {
+    isPending ? '' : queryClient.invalidateQueries({queryKey: ['products']});
+  }, [isPending])
 
   return (
     <ModalLayout>
@@ -37,7 +49,7 @@ export default function AddProductModal() {
         onSubmit={handleSubmit(addProductSubmit)}
         title="Добавление товара"
         button="Добавить"
-        enctype={true}
+        disabled={isPending}
       >
         <Input
           title="Название"

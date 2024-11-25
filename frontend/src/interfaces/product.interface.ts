@@ -5,3 +5,7 @@ export interface IProduct {
     img: string,
     price: number
 }
+
+type WithData<T> = { data: T}
+
+export type IProducts = WithData<IProduct[]>

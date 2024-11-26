@@ -6,9 +6,13 @@ import FormLayout from "../../components/FormLayout/FormLayout";
 import { useEffect, useState } from "react";
 import { useCreateProduct } from "../../utils/hooks/Product/useCreateProduct";
 import { useQueryClient } from "@tanstack/react-query";
+import InputImage from "../../components/InputImage/InputImage";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import Toaster from "../../components/Toaster/Toaster";
 
 export default function AddProductModal() {
-  const [errorValue, setErrorValue] = useState<string | undefined>("");
+  const [activeInput, setActiveInput] = useState(false);
   const queryClient = useQueryClient();
 
   const {
@@ -20,75 +24,99 @@ export default function AddProductModal() {
     mode: "onChange",
   });
 
+  const errorToast = (data: string | undefined) => {
+    toast.error(data, {
+      autoClose: false
+    })
+  }
+
   const { mutate, isPending } = useCreateProduct({
-    onSuccess(){
-      reset()
+    onSuccess() {
+      setActiveInput((state) => !state);
+      reset();
+      toast.success('Успешно', {
+        autoClose: 5000,
+      });
     },
     onError(error) {
-        setErrorValue(error.response?.data?.message);
+      errorToast(error.response?.data?.message)
     },
   })
 
   const addProductSubmit: SubmitHandler<IProductForm> = (data) => {
-    if(isPending) return
+    if (isPending) return
 
     const formData = new FormData();
 
     Object.entries(data).forEach(([el, value]) => el !== 'img' && formData.append(el, value));
     formData.append('img', data.img[0]);
-    mutate(formData)
+    mutate(formData);
   };
 
   useEffect(() => {
-    isPending ? '' : queryClient.invalidateQueries({queryKey: ['products']});
+    isPending ? '' : queryClient.invalidateQueries({ queryKey: ['products'] });
   }, [isPending])
+  
+  const toastClick = () => {
+    toast.success('Успешно', {
+    })
+  }
 
   return (
-    <ModalLayout>
-      <FormLayout
-        onSubmit={handleSubmit(addProductSubmit)}
-        title="Добавление товара"
-        button="Добавить"
-        disabled={isPending}
-      >
-        <Input
-          title="Название"
-          id="name"
-          {...register("name", {
-            required: "Заполните название",
-          })}
-          errorActive={errors.name && errors.name.message}
-        />
-        <Input
-          title="Описание"
-          id="description"
-          {...register("description", {
-            required: "Заполните описание",
-          })}
-          errorActive={errors.description && errors.description.message}
-        />
-        <Input
-          title="Картинка"
-          id="img"
-          type="file"
-          {...register("img", {
-            required: "Заполните картинку",
-          })}
-          errorActive={errors.img && errors.img.message}
-        />
-        <Input
-          title="Цена"
-          id="price"
-          type="number"
-          {...register("price", {
-            required: "Заполните цену",
-            valueAsNumber: true
-          })}
-          errorActive={
-            (errors.price && errors.price.message) || (errorValue && errorValue)
-          }
-        />
-      </FormLayout>
-    </ModalLayout>
+    <>
+      <Toaster />
+      <ModalLayout>
+      <button onClick={toastClick}>click</button>
+
+        <FormLayout
+          onSubmit={handleSubmit(addProductSubmit)}
+          title="Добавление товара"
+          button="Добавить"
+          disabled={isPending}
+        >
+          <Input
+            title="Название"
+            id="name"
+            {...register("name", {
+              required: "Заполните название",
+            })}
+            errorActive={errors.name && errors.name.message}
+            activeInput={activeInput}
+          />
+          <Input
+            title="Описание"
+            id="description"
+            {...register("description", {
+              required: "Заполните описание",
+            })}
+            errorActive={errors.description && errors.description.message}
+            activeInput={activeInput}
+
+          />
+          <InputImage
+            id="img"
+            {...register('img', {
+              required: 'Выберите изображение'
+            })}
+            errorMessage={errors.img && errors.img.message}
+            activeInput={activeInput}
+          />
+          <Input
+            title="Цена"
+            id="price"
+            type="number"
+            {...register("price", {
+              required: "Заполните цену",
+              valueAsNumber: true
+            })}
+            errorActive={
+              (errors.price && errors.price.message)
+            }
+            activeInput={activeInput}
+
+          />
+        </FormLayout>
+      </ModalLayout>
+    </>
   );
 }

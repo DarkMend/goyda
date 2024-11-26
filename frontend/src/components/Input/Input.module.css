@@ -23,6 +23,7 @@
     top: 10px;
     left: 5px;
     transition: all .3s ease;
+    cursor: text;
 }
 
 .input-label.active{

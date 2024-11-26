@@ -1,17 +1,21 @@
-import { ChangeEvent, forwardRef, useState } from 'react';
+import { ChangeEvent, forwardRef, useEffect, useState } from 'react';
 import styles from './Input.module.css'
 import { IInput } from './Input.props';
 import cn from 'classnames'
 
-const Input = forwardRef<HTMLInputElement, IInput>(({ type = 'text', id, title, value, errorActive, ...props }, ref) => {
+const Input = forwardRef<HTMLInputElement, IInput>(({ type = 'text', id, title, value, errorActive = false, activeInput, ...props }, ref) => {
 
-    const [labelActive, setLabelActive] = useState(false);
+    const [labelActive, setLabelActive] = useState(activeInput);
 
     function active(e: ChangeEvent<HTMLInputElement>) {
         if (!e.target.value) {
             setLabelActive((state) => !state);
         }
     }
+
+    useEffect(() => {
+        setLabelActive(false);
+    }, [activeInput])
 
 
     return (

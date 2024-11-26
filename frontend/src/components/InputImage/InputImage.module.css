@@ -1,0 +1,51 @@
+.input{
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+
+.icon{
+    width: 40px;
+    height: 40px;
+    color: #2D2D36;
+    transition: all .3s ease;
+    cursor: pointer;
+}
+
+.label{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    border: 2px solid #2D2D36;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.label.error{
+    border-color: rgb(207, 0, 0);
+}
+
+.label.error > .icon{
+    color: rgb(207, 0, 0);
+}
+
+.label.active{
+    border-color: #6e6ea2;
+}
+
+.label.active > .icon{
+    color: #6e6ea2;
+}
+
+.error-message{
+    font-size: 14px;
+    font-weight: 500;
+    color: rgb(207, 0, 0);
+}

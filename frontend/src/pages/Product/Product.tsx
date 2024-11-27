@@ -7,10 +7,10 @@ import ProductService from '../../services/product.service'
 import Loading from '../../components/Loading/Loading'
 import DeleteButton from '../../components/DeleteButton/DeleteButton'
 import EditButton from '../../components/EditButton/EditButton'
-import ModalLayout from '../../components/ModalLayout/ModalLayout'
 import { useDispatch } from 'react-redux'
 import { AppDispatch, store } from '../../store/store'
 import { modalActions } from '../../store/modal.slice'
+import EditProductModal from './EditProductModal'
 
 export default function Product() {
 
@@ -32,12 +32,7 @@ export default function Product() {
             {
                 isLoading ? <Loading /> :
                     <div>
-                        <ModalLayout>    
-                        position: absolute;
-                        position: absolute;
-                        position: absolute;
-                        position: absolute;
-                        </ModalLayout>
+                        <EditProductModal />
                         <div className={styles['title-wrapper']}>
                             <Title>{data?.name}</Title>
                             <div className={styles['admin-actions']}>

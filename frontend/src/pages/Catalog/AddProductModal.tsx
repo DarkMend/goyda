@@ -56,18 +56,11 @@ export default function AddProductModal() {
   useEffect(() => {
     isPending ? '' : queryClient.invalidateQueries({ queryKey: ['products'] });
   }, [isPending])
-  
-  const toastClick = () => {
-    toast.success('Успешно', {
-    })
-  }
 
   return (
     <>
       <Toaster />
       <ModalLayout>
-      <button onClick={toastClick}>click</button>
-
         <FormLayout
           onSubmit={handleSubmit(addProductSubmit)}
           title="Добавление товара"

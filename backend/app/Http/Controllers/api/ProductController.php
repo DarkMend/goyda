@@ -23,7 +23,7 @@ class ProductController extends Controller
         $image = Storage::url($product['img']);
 
         unset($product['img']);
-        
+
         $product['img'] = $image;
 
         return $product;
@@ -63,6 +63,26 @@ class ProductController extends Controller
 
 
         Product::create($data);
+
+        return response()->json(['data' => [], 'message' => 'Успешно'], 200);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $product = Product::find($id);
+
+        $data = $request->validate([
+            'name' => ['required'],
+            'description' => ['required'],
+            'img' => ['nullable','mimes:jpg,jpeg,png'],
+            'price' => ['required', 'integer']
+        ]);
+
+        if($data['img'] == 'null'){
+            return 'aaa';
+        }
+
+        $product->update($data);
 
         return response()->json(['data' => [], 'message' => 'Успешно'], 200);
     }

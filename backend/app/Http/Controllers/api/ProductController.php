@@ -92,4 +92,9 @@ class ProductController extends Controller
 
         return response()->json(['data' => [], 'message' => 'Успешно'], 200);
     }
+    
+    public function destroy($id) {
+        Product::find($id)->delete();
+        response()->json(['data' => [], 'message' => 'Успешно'], 200);
+    }
 }

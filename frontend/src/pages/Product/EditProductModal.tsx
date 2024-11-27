@@ -4,7 +4,7 @@ import ModalLayout from "../../components/ModalLayout/ModalLayout";
 import { IProductForm } from "../../interfaces/productForm.interface";
 import FormLayout from "../../components/FormLayout/FormLayout";
 import { useEffect, useState } from "react";
-import { useEditProduct } from "../../utils/hooks/Product/useCreateProduct";
+import { useEditProduct } from "../../utils/hooks/Product/useEditProduct";
 import { useQueryClient } from "@tanstack/react-query";
 import InputImage from "../../components/InputImage/InputImage";
 import { toast } from "react-toastify";

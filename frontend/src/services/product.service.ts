@@ -15,6 +15,9 @@ const ProductService = {
     },
     async editProduct(data: FormData) {
         return axiosClassic.post<unknown>(`/products/${data.get('id')}`, data)
+    },
+    async deleteProduct(data: string){
+        return axiosClassic.delete<unknown>(`/products/${data}`)
     }
 }
 

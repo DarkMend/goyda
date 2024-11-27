@@ -74,12 +74,18 @@ class ProductController extends Controller
         $data = $request->validate([
             'name' => ['required'],
             'description' => ['required'],
-            'img' => ['nullable','mimes:jpg,jpeg,png'],
+            'img' => ['nullable', 'mimes:jpg,jpeg,png', 'image'],
             'price' => ['required', 'integer']
         ]);
 
-        if($data['img'] == 'null'){
-            return 'aaa';
+        if ($data['img'] == null) {
+            unset($data['img']);
+            $data['img'] = $product['img'];
+        } else {
+            $image = $request->file('img')->store('products');
+
+            unset($data['img']);
+            $data['img'] = $image;
         }
 
         $product->update($data);

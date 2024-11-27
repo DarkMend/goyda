@@ -4,7 +4,3 @@ export interface IProductForm{
     img: FileList,
     price: number
 }
-
-export interface IProductFormFormData extends FormData {
-    id?: number
-}

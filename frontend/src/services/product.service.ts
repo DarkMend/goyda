@@ -1,6 +1,5 @@
 import { IProduct, IProducts } from '../interfaces/product.interface'
 import { axiosClassic } from '../api/interceptors'
-import { IProductFormFormData } from '../interfaces/productForm.interface'
 
 const ProductService = {
     async getProducts() {
@@ -14,7 +13,7 @@ const ProductService = {
     async addProduct(data: FormData) {
         return axiosClassic.post<unknown>('/products', data)
     },
-    async editProduct(data: IProductFormFormData) {
+    async editProduct(data: FormData) {
         return axiosClassic.post<unknown>(`/products/${data.get('id')}`, data)
     }
 }

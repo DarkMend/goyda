@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\ProductController;
-use App\Models\Product;
+use App\Http\Controllers\api\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,3 +22,7 @@ Route::get('/products/{id}', [ProductController::class, 'show']);
 Route::post('/products', [ProductController::class, 'store']);
 Route::post('/products/{id}', [ProductController::class, 'update']);
 Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::get('/get', [UserController::class, 'index']);
+});

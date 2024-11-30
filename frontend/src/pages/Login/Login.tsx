@@ -1,13 +1,17 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 import Input from '../../components/Input/Input'
-import MainButton from '../../components/MainButton/MainButton'
-import Title from '../../components/Title/Title'
 import styles from './Login.module.css'
 import { ILoginForm } from './LoginForm.interface'
+import FormLayout from '../../components/FormLayout/FormLayout'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import Toaster from '../../components/Toaster/Toaster'
 
 export default function Login() {
 
-    const {register, handleSubmit, formState} = useForm<ILoginForm>({
+    const [activeInput, setActiveInput] = useState(false);
+
+    const { register, handleSubmit, formState: { errors } } = useForm<ILoginForm>({
         mode: 'onSubmit'
     });
 
@@ -15,22 +19,34 @@ export default function Login() {
         console.log(data)
     }
 
-
     return (
         <div className={styles['auth-page']}>
-            <Title>Авторизация</Title>
-            <form className={styles['auth-form']} onSubmit={handleSubmit(onSubmit)}>
-                <Input type='text' id='email' title='Email' {...register(
-                    'email', {
-                        required: 'Введите email', 
-                    }
-                )}/>
-                {formState.errors['email']?.message}
-                <Input type='password' id='password' title='Password' {...register('password', {
-                    required: 'Введите пароль'
-                })} />
-                <MainButton>Войти</MainButton>
-            </form>
+            <Toaster />
+            <FormLayout title='Авторизация' button='Войти' onSubmit={handleSubmit(onSubmit)}>
+                <Input
+                    title="Email"
+                    id="email"
+                    {...register("email", {
+                        required: "Заполните название",
+                        pattern: {
+                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                            message: 'Некорректный email',
+                        }
+                    })}
+                    errorActive={errors.email && errors.email.message}
+                    activeInput={activeInput}
+                />
+                <Input
+                    title="Пароль"
+                    id="password"
+                    {...register("password", {
+                        required: "Заполните название",
+                    })}
+                    errorActive={errors.password && errors.password.message}
+                    activeInput={activeInput}
+                />
+            </FormLayout>
+            <div>Нет аккаунта - <Link to={'/auth/reg'}>Регистрация</Link></div>
         </div>
     )
 }

@@ -12,6 +12,7 @@ import { AppDispatch, store } from "../../store/store";
 import { modalActions } from "../../store/modal.slice";
 import EditProductModal from "./EditProductModal";
 import { useDeleteProduct } from "../../utils/hooks/Product/useDeleteProduct";
+import { IProduct } from "../../interfaces/product.interface";
 
 export default function Product() {
   const { productId } = useParams();
@@ -44,7 +45,7 @@ export default function Product() {
         <Loading />
       ) : (
         <div>
-          <EditProductModal />
+          <EditProductModal data={data as IProduct}/>
           <div className={styles["title-wrapper"]}>
             <Title>{data?.name}</Title>
             <div className={styles["admin-actions"]}>

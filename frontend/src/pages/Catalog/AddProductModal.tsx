@@ -32,7 +32,7 @@ export default function AddProductModal() {
 
   const { mutate, isPending } = useCreateProduct({
     onSuccess() {
-      setActiveInput((state) => !state);
+      setActiveInput(false);
       reset();
       toast.success('Успешно', {
         autoClose: 5000,
@@ -50,6 +50,7 @@ export default function AddProductModal() {
 
     Object.entries(data).forEach(([el, value]) => el !== 'img' && formData.append(el, value));
     formData.append('img', data.img[0]);
+    setActiveInput(true);
     mutate(formData);
   };
 

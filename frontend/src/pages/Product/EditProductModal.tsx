@@ -11,8 +11,13 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Toaster from "../../components/Toaster/Toaster";
 import { useParams } from "react-router-dom";
+import { IProduct } from "../../interfaces/product.interface";
 
-export default function AddProductModal() {
+export interface IEditProductModalProps {
+  data: IProduct
+}
+
+export default function EditProductModal({data}: IEditProductModalProps) {
   const [activeInput, setActiveInput] = useState(false);
   const queryClient = useQueryClient();
   const { productId } = useParams();
@@ -60,7 +65,6 @@ export default function AddProductModal() {
         formData.append('img', data.img[0]);
     }
 
-
     formData.append("id", productId as string);
     console.log(...formData);
     mutate(formData);
@@ -69,6 +73,15 @@ export default function AddProductModal() {
   useEffect(() => {
     isPending ? "" : queryClient.invalidateQueries({ queryKey: ["products"] });
   }, [isPending]);
+
+  useEffect(() => {
+    reset({
+      name: data.name,
+      description: data.description,
+      price: data.price
+    })
+    setActiveInput(true);
+  }, [data])
 
   return (
     <>

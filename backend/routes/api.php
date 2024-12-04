@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\api\UserController;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/get', [UserController::class, 'index']);
 });
 
-Route::controller(UserController::class)->prefix('auth')->group(function () {
-    Route::post('/reg',  'store');
+Route::controller(AuthController::class)->prefix('auth')->group(function () {
+    Route::post('/reg',  'reg');
+    Route::post('/login', 'login');
 });
+
+Route::get('/token', [AuthController::class, 'getToken'])->middleware(['middleware' => 'auth:sanctum']);

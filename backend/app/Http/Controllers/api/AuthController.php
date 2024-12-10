@@ -43,7 +43,7 @@ class AuthController extends Controller
         return response()->json(['data' => [], 'message' => 'Вы вошли', 'token' => $token], 200);
     }
 
-    function getToken() {
-        return Auth::user();
+    public function getAuthUser() {
+        return response()->json(['user' => Auth::user()], 200);
     }
 }

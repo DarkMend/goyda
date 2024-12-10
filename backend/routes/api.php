@@ -33,4 +33,6 @@ Route::controller(AuthController::class)->prefix('auth')->group(function () {
     Route::post('/login', 'login');
 });
 
-Route::get('/token', [AuthController::class, 'getToken'])->middleware(['middleware' => 'auth:sanctum']);
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::get('/me', [AuthController::class, 'getAuthUser']);
+});

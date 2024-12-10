@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { checkAuth } from "../api/checkAuth";
+// import { checkAuth } from "../api/checkAuth";
 
 export interface User {
     email: string,
@@ -13,7 +13,7 @@ export interface UserState {
     isAuth: boolean
 }
 
-const initialState: UserState = {
+export const initialState: UserState = {
     user: null,
     token: null,
     isAuth: false
@@ -33,11 +33,12 @@ const userSlice = createSlice({
             state.token = null;
         }
     },
-    extraReducers: (builder) => {
-        builder.addCase(checkAuth.fulfilled, (state, action) => {
-            state.user = action.payload?.user;   
-        })
-    }
+    // extraReducers: (builder) => {
+    //     builder.addCase(checkAuth.fulfilled, (state, action) => {
+    //         state.user = action.payload?.user;  
+    //         state.isAuth = true;
+    //     })
+    // }
 })
 
 export const {setUser, removeUser} = userSlice.actions;

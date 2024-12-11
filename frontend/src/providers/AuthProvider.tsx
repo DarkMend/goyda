@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import Cookies from "js-cookie";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { axiosWithAuth } from "../api/interceptors";
 import { useDispatch } from "react-redux";
 import { setUser } from "../store/userSlice";
+// import { RootState } from "../store/store";
 
 type Children = {
   children: ReactNode;
@@ -11,6 +12,7 @@ type Children = {
 
 export const AuthProvider = ({ children }: Children) => {
   const dispatch = useDispatch();
+  // const state = useSelector<RootState>(state => state.user);
 
   const token = Cookies.get("access_token");
 
@@ -20,9 +22,11 @@ export const AuthProvider = ({ children }: Children) => {
     enabled: !!token,
   });
 
-  if (user) {
-    dispatch(setUser(user?.data));
-  }
+  useEffect(() => {
+    if (user) {
+      dispatch(setUser(user?.data));
+    }
+  }, [user, dispatch]);
 
   return <div>{children}</div>;
 };

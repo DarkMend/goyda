@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -44,6 +45,6 @@ class AuthController extends Controller
     }
 
     public function getAuthUser() {
-        return response()->json(['user' => Auth::user()], 200);
+        return response()->json(['data' => new UserResource(Auth::user())], 200);
     }
 }

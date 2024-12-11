@@ -9,13 +9,11 @@ export interface User {
 
 export interface UserState {
     user: User | null,
-    token: string | null,
     isAuth: boolean
 }
 
 export const initialState: UserState = {
     user: null,
-    token: null,
     isAuth: false
 };
 
@@ -24,13 +22,12 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         setUser(state, action) {
-            state.user = action.payload.user;
-            state.token = action.payload.token;
-            state.isAuth = action.payload.isAuth;
+            state.user = action.payload.data;
+            state.isAuth = true;
         },
         removeUser(state) {
             state.user = null;
-            state.token = null;
+            state.isAuth = false;
         }
     },
     // extraReducers: (builder) => {

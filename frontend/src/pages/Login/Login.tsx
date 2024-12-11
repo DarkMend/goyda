@@ -10,16 +10,10 @@ import { toast } from 'react-toastify'
 import { IUser } from '../../interfaces/user.interface'
 import Cookies from 'js-cookie'
 
-export type dataSuccess = {
-    data: {
-
-    }
-}
-
 export default function Login() {
 
     const [activeInput, setActiveInput] = useState(false);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const { register, handleSubmit, formState: { errors } } = useForm<IUser>({
         mode: 'onSubmit'
@@ -32,7 +26,7 @@ export default function Login() {
                 autoClose: 2000
             });
             setTimeout(() => {
-                navigate('/');
+                document.location.href = '/'
             }, 2500)
         },
         onError(errors) {

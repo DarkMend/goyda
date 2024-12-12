@@ -30,9 +30,9 @@ axiosWithAuth.interceptors.response.use(
       return response; 
     },
     error => {
-      if (error.response.status == 401 ) {
-        removeToken();
-        window.location.href = '/auth/login';
-      }
+      // if (error.response.status == 401 ) {
+      //   removeToken();
+      //   window.location.href = '/auth/login';
+      // }
     }
   );

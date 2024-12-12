@@ -15,4 +15,8 @@ class Product extends Model
     function getImageUrl(){
         return Storage::url($this->img);
     }
+
+    public function users(){
+        return $this->belongsToMany(User::class);
+    }
 }

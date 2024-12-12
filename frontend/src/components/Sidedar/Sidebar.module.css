@@ -139,3 +139,11 @@
 .genjutsu.sidebar-inactive{
     width: 90px;
 }
+
+.menu__logout{
+    width: 100%;
+    display: block;
+    cursor: pointer;
+    background: none;
+    border: none;
+}

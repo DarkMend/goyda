@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\CartController;
 use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\api\UserController;
 use Illuminate\Support\Facades\Route;
@@ -35,4 +36,9 @@ Route::controller(AuthController::class)->prefix('auth')->group(function () {
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/me', [AuthController::class, 'getAuthUser']);
+    Route::post('/auth/logout', [AuthController::class, 'logout']);
+});
+
+Route::middleware(['middleware' => 'auth:sanctum'])->controller(CartController::class)->prefix('cart')->group(function () {
+    Route::post('/add-product/{id}', 'store');
 });

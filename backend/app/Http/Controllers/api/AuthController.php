@@ -47,4 +47,12 @@ class AuthController extends Controller
     public function getAuthUser() {
         return response()->json(['data' => new UserResource(Auth::user())], 200);
     }
+
+    public function logout(){
+        $user = request()->user();
+
+        $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
+
+        return response()->json(['Успех'],200);
+    }
 }

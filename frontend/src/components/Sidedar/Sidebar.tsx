@@ -4,13 +4,16 @@ import cn from "classnames";
 import {
   CircleUserRound,
   House,
+  LogOut,
   MoveHorizontal,
   ShoppingBasket,
   ShoppingCart,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import { UserService } from "../../services/user.service";
+import { removeToken } from "../../utils/helpers/token";
 
 export default function Sidebar() {
   let a;
@@ -37,6 +40,11 @@ export default function Sidebar() {
     localStorage.setItem("isActiveSidebar", JSON.stringify(!isActiveSidebar));
   }
 
+  const logout = async () => {
+    await UserService.logout();
+    removeToken();
+    document.location.href = '/'
+  }
   return (
     <>
       <div
@@ -57,7 +65,16 @@ export default function Sidebar() {
             <p>GameShop</p>
           </div>
           <div className={styles["menu"]}>
-            {state.user ? '' : (
+            {state.user ? (<button className={styles["menu__logout"]} onClick={logout}>
+                  <div
+                    className={cn(styles["menu__item"])}
+                  >
+                    <div className={styles["menu-icon"]}>
+                      <LogOut className={styles["icon"]} />
+                    </div>
+                    <p>Выход</p>
+                  </div>
+              </button>) : (
               <NavLink to="/auth/login" className={styles["menu__href"]}>
                 {({ isActive }) => (
                   <div

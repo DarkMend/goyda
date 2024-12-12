@@ -5,6 +5,7 @@ import styles from './CardItem.module.css'
 import { ICatdItem } from './CardItem.props'
 
 export default function CardItem({data}: ICatdItem) {
+
     return (
         <div className={styles['card']}>
             <div className={styles['card-img']}>

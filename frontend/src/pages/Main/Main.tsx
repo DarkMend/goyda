@@ -9,7 +9,6 @@ export default function Main() {
 
     const state = useSelector<RootState>(state => state.user)
 
-    console.log(state);
     return (
         <div className={styles['main']}>
             <Title>Добпро епта</Title>

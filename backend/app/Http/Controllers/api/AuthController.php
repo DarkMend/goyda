@@ -45,7 +45,10 @@ class AuthController extends Controller
     }
 
     public function getAuthUser() {
-        return response()->json(['data' => new UserResource(Auth::user())], 200);
+        $user_id = Auth::id();
+        $user = User::find($user_id);
+
+        return response()->json(['data' => new UserResource($user->load('products'))], 200);
     }
 
     public function logout(){

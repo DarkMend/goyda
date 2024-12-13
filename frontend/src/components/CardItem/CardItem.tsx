@@ -3,8 +3,14 @@ import CartButton from '../CartButton/CartButton'
 import MainButton from '../MainButton/MainButton'
 import styles from './CardItem.module.css'
 import { ICatdItem } from './CardItem.props'
+import { useSelector } from 'react-redux'
+import { selectUser, UserState } from '../../store/userSlice'
 
 export default function CardItem({data}: ICatdItem) {
+
+    const state = useSelector<UserState>(selectUser);
+    const {user} = state as UserState;
+    console.log(user?.cart);
 
     return (
         <div className={styles['card']}>

@@ -66,15 +66,15 @@ export default function Sidebar() {
           </div>
           <div className={styles["menu"]}>
             {state.user ? (<button className={styles["menu__logout"]} onClick={logout}>
-                  <div
-                    className={cn(styles["menu__item"])}
-                  >
-                    <div className={styles["menu-icon"]}>
-                      <LogOut className={styles["icon"]} />
-                    </div>
-                    <p>Выход</p>
-                  </div>
-              </button>) : (
+              <div
+                className={cn(styles["menu__item"])}
+              >
+                <div className={styles["menu-icon"]}>
+                  <LogOut className={styles["icon"]} />
+                </div>
+                <p>Выход</p>
+              </div>
+            </button>) : (
               <NavLink to="/auth/login" className={styles["menu__href"]}>
                 {({ isActive }) => (
                   <div
@@ -120,12 +120,16 @@ export default function Sidebar() {
               )}
             </NavLink>
             <NavLink to="/cart" className={styles["menu__href"]}>
-              <div className={styles["menu__item"]}>
-                <div className={styles["menu-icon"]}>
-                  <ShoppingBasket className={styles["icon"]} />
+              {({isActive}) => (
+                <div className={cn(styles["menu__item"], {
+                  [styles['active']]: isActive
+                })}>
+                  <div className={styles["menu-icon"]}>
+                    <ShoppingBasket className={styles["icon"]} />
+                  </div>
+                  <p>Корзина</p>
                 </div>
-                <p>Корзина</p>
-              </div>
+              )}
             </NavLink>
           </div>
         </div>

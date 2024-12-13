@@ -1,14 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IProduct } from "../interfaces/product.interface";
 // import { checkAuth } from "../api/checkAuth";
 
 export interface User {
-    email: string,
-    id: number,
-    name: string
+
 }
 
 export interface UserState {
-    user: User | null,
+    user: {
+        email: string,
+        id: number,
+        name: string,
+        cart: IProduct[] | null;
+    } | null,
     isAuth: boolean
 }
 
@@ -21,8 +25,8 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setUser(state, action) {
-            state.user = action.payload.data;
+        setUser(state, action: PayloadAction<UserState>) {
+            state.user = action.payload.user;
             state.isAuth = true;
         },
         removeUser(state) {
@@ -38,6 +42,8 @@ const userSlice = createSlice({
     // }
 })
 
-export const {setUser, removeUser} = userSlice.actions;
+export const { setUser, removeUser } = userSlice.actions;
+
+export const selectUser = (state: UserState) => state.user
 
 export default userSlice.reducer;

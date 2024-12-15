@@ -10,7 +10,6 @@ export default function CardItem({data}: ICatdItem) {
 
     const state = useSelector<UserState>(selectUser);
     const {user} = state as UserState;
-    console.log(user?.cart);
 
     return (
         <div className={styles['card']}>
@@ -24,7 +23,10 @@ export default function CardItem({data}: ICatdItem) {
                 <div className={styles['price']}>
                     {data.price} р.
                 </div>
-                <CartButton />
+                {
+                    user ? user.cart?.find((el) => el.id == data?.id) ? <div>хуй</div> : <CartButton /> : <CartButton /> 
+                }
+                
             </div>
             <Link to={`/products/${data.id}`}><MainButton>Подробнее</MainButton></Link>
         </div>

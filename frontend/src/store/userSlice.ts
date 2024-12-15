@@ -2,10 +2,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IProduct } from "../interfaces/product.interface";
 // import { checkAuth } from "../api/checkAuth";
 
-export interface User {
-
-}
-
 export interface UserState {
     user: {
         email: string,

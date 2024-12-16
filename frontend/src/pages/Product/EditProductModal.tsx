@@ -66,7 +66,6 @@ export default function EditProductModal({data}: IEditProductModalProps) {
     }
 
     formData.append("id", productId as string);
-    console.log(...formData);
     mutate(formData);
   };
 

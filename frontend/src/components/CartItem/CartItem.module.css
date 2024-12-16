@@ -53,6 +53,15 @@
     transition: all .3s ease;
 }
 
+.calc-button.disabled{
+    background: #555569;
+    cursor: not-allowed;
+}
+
+.calc-button.disabled:hover{
+    background: #555569;
+}
+
 .calc-button:hover{
     background: #8a8ab9;
 }

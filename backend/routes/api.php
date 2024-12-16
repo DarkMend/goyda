@@ -42,4 +42,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 Route::middleware(['middleware' => 'auth:sanctum'])->controller(CartController::class)->prefix('cart')->group(function () {
     Route::post('/add-product/{id}', 'store');
     Route::get('', 'index');
+    Route::delete('/{id}', 'destroy');
+    Route::post('/count-update/{id}', 'updateCount');
 });

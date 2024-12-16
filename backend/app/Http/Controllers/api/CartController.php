@@ -27,4 +27,24 @@ class CartController extends Controller
 
         return response()->json(['data' => [$data], 'message' => 'Добавлено'], 200);
     }
+
+    public function destroy($id){
+        $user_id = Auth::id();
+        Cart::where('user_id', $user_id)->where('product_id', $id)->delete();
+        return response()->json(['data' => [], 'message' => 'Успех'], 200);
+    }
+
+    public function updateCount($id, Request $request){
+        $user_id = Auth::id();
+        
+        $data = $request->validate([
+            'count' => ['integer', 'required', 'min:1']
+        ]);
+
+        $cart_item = Cart::where('user_id', $user_id)->where('product_id', $id)->firstOrFail();
+
+        $cart_item->update($data);
+        
+        return response()->json(['data' => $cart_item, 'message' => 'Успех'], 200);
+    }
 }

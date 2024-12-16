@@ -4,6 +4,7 @@ import cn from "classnames";
 import {
   CircleUserRound,
   House,
+  ListOrdered,
   LogOut,
   MoveHorizontal,
   ShoppingBasket,
@@ -128,6 +129,18 @@ export default function Sidebar() {
                     <ShoppingBasket className={styles["icon"]} />
                   </div>
                   <p>Корзина</p>
+                </div>
+              )}
+            </NavLink>
+            <NavLink to="/orders" className={styles["menu__href"]}>
+              {({isActive}) => (
+                <div className={cn(styles["menu__item"], {
+                  [styles['active']]: isActive
+                })}>
+                  <div className={styles["menu-icon"]}>
+                    <ListOrdered className={styles["icon"]} />
+                  </div>
+                  <p>Мои заказы</p>
                 </div>
               )}
             </NavLink>

@@ -4,8 +4,40 @@ import { Link } from "react-router-dom";
 import styles from './CartItem.module.css';
 import cn from 'classnames';
 import { ICartItem } from "./CartItem.props";
+import { useUpdateCartCount } from "../../utils/hooks/Cart/useUpdateCartCount";
+import { useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { useDeleteCart } from "../../utils/hooks/Cart/useDeleteCart";
+
+export interface ICartCount {
+    id: number,
+    count: number
+}
 
 export default function CartItem({ product, count }: ICartItem) {
+
+    const { mutate, isPending } = useUpdateCartCount();
+    const queryClient = useQueryClient();
+
+    const { mutate: deleteCartItem, isPending: isPendingDelete } = useDeleteCart();
+
+    const deleteCart = async (id: number) => {
+        deleteCartItem(id);
+    }
+
+    const updateCount = (data: ICartCount) => {
+        mutate(data);
+    }
+
+    useEffect(() => {
+        (isPendingDelete) ? '' : queryClient.invalidateQueries({queryKey: ['user']});
+        (isPendingDelete) ? '' : queryClient.invalidateQueries({ queryKey: ['cart'] });
+    }, [isPendingDelete])
+
+    useEffect(() => {
+        (isPending) ? '' : queryClient.invalidateQueries({ queryKey: ['cart'] });
+    }, [isPending])
+
     return (
         <div className={styles['cart-item']}>
             <Link to={`/products/${product.id}`}>
@@ -22,15 +54,17 @@ export default function CartItem({ product, count }: ICartItem) {
                 <div className={styles['title']}>
                     {product.price} р.
                 </div>
-                <DeleteButton />
+                <DeleteButton onClick={() => deleteCart(product?.id)} />
                 <div className={styles['calc']}>
-                    <button className={cn(styles['calc-button'], styles['min'])}>
+                    <button className={cn(styles['calc-button'], styles['min'], {
+                        [styles['disabled']]: count == 1
+                    })} disabled={count == 1 && true} onClick={() => updateCount({ id: product.id, count: count - 1 })}>
                         <Minus className={styles['calc-button__icon']} />
                     </button>
                     <div className={styles['window']}>
                         {count}
                     </div>
-                    <button className={cn(styles['calc-button'], styles['pls'])}>
+                    <button className={cn(styles['calc-button'], styles['pls'])} onClick={() => updateCount({ id: product.id, count: count + 1 })}>
                         <Plus className={cn(styles['calc-button__icon'])} />
                     </button>
                 </div>

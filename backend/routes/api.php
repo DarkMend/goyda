@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\CartController;
+use App\Http\Controllers\api\OrderController;
 use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\api\UserController;
 use Illuminate\Support\Facades\Route;
@@ -44,4 +45,9 @@ Route::middleware(['middleware' => 'auth:sanctum'])->controller(CartController::
     Route::get('', 'index');
     Route::delete('/{id}', 'destroy');
     Route::post('/count-update/{id}', 'updateCount');
+});
+
+Route::middleware(['middleware'=>'auth:sanctum'])->controller(OrderController::class)->prefix('orders')->group(function () {
+    Route::get('', 'index');
+    Route::post('', 'store');
 });

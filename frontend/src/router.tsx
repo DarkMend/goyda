@@ -8,6 +8,7 @@ import Register from "./pages/Register/Register";
 import Product from "./pages/Product/Product";
 import Cart from "./pages/Cart/Cart";
 import Orders from "./pages/Orders/Orders";
+import Order from "./pages/Orders/Order/Order";
 
 const router = createBrowserRouter([
     {
@@ -33,7 +34,11 @@ const router = createBrowserRouter([
             },
             {
                 path: '/orders',
-                element: <Orders />
+                element: <Orders />,
+            },
+            {
+                path: '/orders/:orderId',
+                element: <Order />
             }
         ]
     },

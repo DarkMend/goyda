@@ -1,0 +1,18 @@
+.orders__wrapper{
+    display: flex;
+    flex-direction: row;
+    margin-top: 40px;
+    gap: 30px;
+    color: #2d2d36;
+}
+
+.orders__wrapper-item{
+    flex: 1;
+}
+
+.orders-items{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 20px;
+}

@@ -8,6 +8,7 @@ import AddButton from '../../components/AddButton/AddButton';
 import AddProductModal from './AddProductModal';
 import { useDispatch } from 'react-redux';
 import { modalActions } from '../../store/modal.slice';
+import { IProduct } from '../../interfaces/product.interface';
 
 export default function Catalog() {
 
@@ -33,7 +34,7 @@ export default function Catalog() {
             <div className={styles['catalog__wrapper']}>
                 {
                     isLoading ? <Loading /> :
-                        data?.length && data.map((el: any) => <CardItem key={el.id} data={el} />)}
+                        data?.length && data.map((el: IProduct) => <CardItem key={el.id} data={el} />)}
             </div>
         </div>
     )

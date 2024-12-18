@@ -45,5 +45,10 @@ class OrderController extends Controller
         });
 
         return response()->json(['data' => '', 'message' => 'Заказ создан'], 200);
-     }
+    }
+
+    public function show($id){
+        $order = Order::where('id', $id)->with('products')->first();
+        return new OrderResource($order);
+    }
 }

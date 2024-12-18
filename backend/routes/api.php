@@ -50,4 +50,5 @@ Route::middleware(['middleware' => 'auth:sanctum'])->controller(CartController::
 Route::middleware(['middleware'=>'auth:sanctum'])->controller(OrderController::class)->prefix('orders')->group(function () {
     Route::get('', 'index');
     Route::post('', 'store');
+    Route::get('/{id}', 'show');
 });

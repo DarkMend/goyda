@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }: Children) => {
 
   const token = Cookies.get("access_token");
 
-  const { data: user } = useQuery({
+  const { data: user, } = useQuery({
     queryKey: ["user"],
     queryFn: () => axiosWithAuth.get("/me"),
     enabled: !!token,

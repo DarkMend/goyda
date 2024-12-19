@@ -7,17 +7,22 @@ import ProductService from "../../services/product.service";
 import Loading from "../../components/Loading/Loading";
 import DeleteButton from "../../components/DeleteButton/DeleteButton";
 import EditButton from "../../components/EditButton/EditButton";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, store } from "../../store/store";
 import { modalActions } from "../../store/modal.slice";
 import EditProductModal from "./EditProductModal";
 import { useDeleteProduct } from "../../utils/hooks/Product/useDeleteProduct";
 import { IProduct } from "../../interfaces/product.interface";
+import { selectUser, UserState } from "../../store/userSlice";
+import cn from 'classnames'
 
 export default function Product() {
   const { productId } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+
+  const state = useSelector<UserState>(selectUser);
+  const {user} = state as UserState;
 
   const { data, isLoading } = useQuery({
     queryKey: ["products", productId],
@@ -63,7 +68,9 @@ export default function Product() {
               <div className={styles["title"]}>{data?.name}</div>
               <div className={styles["description"]}>{data?.description}</div>
               <div className={styles["price"]}>{data?.price} р.</div>
-              <MainButton className={styles["button"]}>В корзину</MainButton>
+              {
+                user ? user.cart?.find((el) => el.id == data?.id) ? <MainButton className={cn(styles["button"], styles["delete"])}>Удалить из корзины</MainButton> : <MainButton className={styles["button"]}>В корзину</MainButton> :  <MainButton className={styles["button"]}>В корзину</MainButton>
+              }
             </div>
           </div>
         </div>

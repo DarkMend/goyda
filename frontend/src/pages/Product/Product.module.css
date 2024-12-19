@@ -45,6 +45,17 @@
     width: 300px;
 }
 
+.button.delete{
+    background: none;
+    border: 2px solid rgb(255, 101, 101);
+    color: rgb(255, 101, 101);
+    transition: all .3s ease;
+}
+
+.button.delete:hover{
+    background: rgb(255, 244, 244);
+}
+
 .title-wrapper{
     display: flex;
     flex-direction: row;

@@ -4,6 +4,7 @@ import { ReactNode, useEffect } from "react";
 import { axiosWithAuth } from "../api/interceptors";
 import { useDispatch } from "react-redux";
 import { setUser } from "../store/userSlice";
+import Loading from "../components/Loading/Loading";
 // import { RootState } from "../store/store";
 
 type Children = {
@@ -16,7 +17,7 @@ export const AuthProvider = ({ children }: Children) => {
 
   const token = Cookies.get("access_token");
 
-  const { data: user, } = useQuery({
+  const { data: user, isLoading } = useQuery({
     queryKey: ["user"],
     queryFn: () => axiosWithAuth.get("/me"),
     enabled: !!token,
@@ -28,5 +29,7 @@ export const AuthProvider = ({ children }: Children) => {
     }
   }, [user, dispatch]);
 
-  return <div>{children}</div>;
+  return <div>{
+    isLoading ? <Loading /> : children
+  }</div>;
 };

@@ -9,6 +9,7 @@ import Product from "./pages/Product/Product";
 import Cart from "./pages/Cart/Cart";
 import Orders from "./pages/Orders/Orders";
 import Order from "./pages/Order/Order";
+import PrivateRoute from "./providers/PrivateRoute";
 
 const router = createBrowserRouter([
     {
@@ -30,15 +31,27 @@ const router = createBrowserRouter([
             },
             {
                 path: '/cart',
-                element: <Cart />
+                element: (
+                    <PrivateRoute>
+                        <Cart />
+                    </PrivateRoute>
+                )
             },
             {
                 path: '/orders',
-                element: <Orders />,
+                element: (
+                    <PrivateRoute>
+                        <Orders />
+                    </PrivateRoute>
+                )
             },
             {
                 path: '/orders/:orderId',
-                element: <Order />
+                element: (
+                    <PrivateRoute>
+                        <Order />
+                    </PrivateRoute>
+                )
             }
         ]
     },

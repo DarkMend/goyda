@@ -30,8 +30,12 @@ export default function CardItem({data}: ICatdItem) {
     }
 
     useEffect(() => {
-        (isPending || isPendingAdd) ? '' : queryClient.invalidateQueries({queryKey: ['user']});
-    }, [isPending, isPendingAdd])
+        (isPending) ? '' : queryClient.invalidateQueries({queryKey: ['user']});
+    }, [isPending])
+
+    useEffect(() => {
+        (isPendingAdd) ? '' : queryClient.invalidateQueries({queryKey: ['user']});
+    }, [isPendingAdd])
 
     return (
         <div className={styles['card']}>

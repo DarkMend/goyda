@@ -24,7 +24,7 @@ export default function Cart() {
     })
 
     const { mutate } = useAddOrder({
-        onSuccess(){
+        onSuccess() {
             navigate('/orders');
         }
     });
@@ -51,6 +51,9 @@ export default function Cart() {
         <div className={styles['cart']}>
             <Title>Корзина</Title>
             {isLoading && <Loading />}
+            {
+                data?.data?.length == 0 && <div style={{ marginTop: '20px' }}>У вас нет товаров в корзине</div>
+            }
             <div className={styles['cart-wrapper']}>
                 {
                     // user?.cart && user.cart.map((el: IProduct) => <CartItem key={el.id} product={el}/>)
@@ -58,12 +61,16 @@ export default function Cart() {
                     data?.data.map((el: ICartItem) => <CartItem key={el.product.id} product={el.product} count={el.count} />)
                 }
             </div>
-            <div className={styles['result']}>
-                <div className={styles['price']}>
-                    Общая стоимость: { allPrice  }
-                </div>
-                <MainButton className={styles['result-button']} onClick={addOrder}>Оформить заказ</MainButton>
-            </div>
+            {
+                data?.data.length == 0 ? '' :
+
+                    <div className={styles['result']}>
+                        <div className={styles['price']}>
+                            Общая стоимость: {allPrice}
+                        </div>
+                        <MainButton className={styles['result-button']} onClick={addOrder}>Оформить заказ</MainButton>
+                    </div>
+            }
         </div>
     )
 }

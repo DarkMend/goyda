@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import MainButton from "../../components/MainButton/MainButton";
 import Title from "../../components/Title/Title";
 import styles from "./Product.module.css";
@@ -15,14 +15,18 @@ import { useDeleteProduct } from "../../utils/hooks/Product/useDeleteProduct";
 import { IProduct } from "../../interfaces/product.interface";
 import { selectUser, UserState } from "../../store/userSlice";
 import cn from 'classnames'
+import { useDeleteCart } from "../../utils/hooks/Cart/useDeleteCart";
+import { useEffect } from "react";
+import { useAddCart } from "../../utils/hooks/Cart/useAddCart";
 
 export default function Product() {
   const { productId } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const state = useSelector<UserState>(selectUser);
-  const {user} = state as UserState;
+  const { user } = state as UserState;
 
   const { data, isLoading } = useQuery({
     queryKey: ["products", productId],
@@ -32,9 +36,25 @@ export default function Product() {
 
   const { mutate } = useDeleteProduct({
     onSuccess() {
-        navigate('/products');
+      navigate('/products');
     },
   });
+
+  const { mutate: mutateCartDelete, isPending } = useDeleteCart();
+
+  const deleteCart = (id: number) => {
+    mutateCartDelete(id);
+  }
+
+  const { mutate: addCartItem, isPending: isPendingAdd } = useAddCart();
+
+  const addCart = (id: number) => {
+    addCartItem(id);
+  }
+
+  useEffect(() => {
+    (isPending || isPendingAdd) ? '' : queryClient.invalidateQueries({ queryKey: ['user'] });
+  }, [isPending, isPendingAdd])
 
   const openModal = () => {
     dispatch(modalActions.setIsActive(!store.getState().modal.isActive));
@@ -50,7 +70,7 @@ export default function Product() {
         <Loading />
       ) : (
         <div>
-          <EditProductModal data={data as IProduct}/>
+          <EditProductModal data={data as IProduct} />
           <div className={styles["title-wrapper"]}>
             <Title>{data?.name}</Title>
             <div className={styles["admin-actions"]}>
@@ -69,7 +89,7 @@ export default function Product() {
               <div className={styles["description"]}>{data?.description}</div>
               <div className={styles["price"]}>{data?.price} р.</div>
               {
-                user ? user.cart?.find((el) => el.id == data?.id) ? <MainButton className={cn(styles["button"], styles["delete"])}>Удалить из корзины</MainButton> : <MainButton className={styles["button"]}>В корзину</MainButton> :  <MainButton className={styles["button"]}>В корзину</MainButton>
+                user ? user.cart?.find((el) => el.id == data?.id) ? <MainButton onClick={() => deleteCart(data?.id as number)} className={cn(styles["button"], styles["delete"])}>Удалить из корзины</MainButton> : <MainButton onClick={() => addCart(data?.id as number)} className={styles["button"]}>В корзину</MainButton> : <MainButton className={styles["button"]}>В корзину</MainButton>
               }
             </div>
           </div>

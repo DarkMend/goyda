@@ -10,7 +10,7 @@ export default function Order() {
   const id = orderId as unknown as number;
 
   const { data } = useQuery({
-    queryKey: ["cartItem"],
+    queryKey: ["cartItem", orderId],
     queryFn: () => orderService.getOrder(id as number),
     select: (data) => data?.data?.data,
   });

@@ -10,11 +10,11 @@ import {
   ShoppingBasket,
   ShoppingCart,
 } from "lucide-react";
-import { MouseEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
 import { UserService } from "../../services/user.service";
 import { removeToken } from "../../utils/helpers/token";
+import { selectUser, UserState } from "../../store/userSlice";
 
 export default function Sidebar() {
   let a;
@@ -26,7 +26,8 @@ export default function Sidebar() {
   }
 
   const [isActiveSidebar, setIsActiveSidebar] = useState<boolean>(a);
-  const state = useSelector<RootState>((state) => state.user);
+  const state = useSelector<UserState>(selectUser);
+  const user = state as UserState;
 
   useEffect(() => {
     const value = localStorage.getItem("isActiveSidebar");
@@ -66,7 +67,7 @@ export default function Sidebar() {
             <p>GameShop</p>
           </div>
           <div className={styles["menu"]}>
-            {state.user ? (<button className={styles["menu__logout"]} onClick={logout}>
+            {user?.user ? (<button className={styles["menu__logout"]} onClick={logout}>
               <div
                 className={cn(styles["menu__item"])}
               >
@@ -76,7 +77,7 @@ export default function Sidebar() {
                 <p>Выход</p>
               </div>
             </button>) : (
-              <NavLink to="/auth/login" className={styles["menu__href"]}>
+              <NavLink to="/auth/login" className={styles["menu__href"]} title="Войти">
                 {({ isActive }) => (
                   <div
                     className={cn(styles["menu__item"], {
@@ -92,7 +93,7 @@ export default function Sidebar() {
               </NavLink>
             )}
             <div className={styles["line"]}></div>
-            <NavLink to="/" className={styles["menu__href"]}>
+            <NavLink to="/" className={styles["menu__href"]} title="Главная">
               {({ isActive }) => (
                 <div
                   className={cn(styles["menu__item"], {
@@ -120,30 +121,36 @@ export default function Sidebar() {
                 </div>
               )}
             </NavLink>
-            <NavLink to="/cart" className={styles["menu__href"]}>
-              {({isActive}) => (
-                <div className={cn(styles["menu__item"], {
-                  [styles['active']]: isActive
-                })}>
-                  <div className={styles["menu-icon"]}>
-                    <ShoppingBasket className={styles["icon"]} />
+            {
+              user?.user && <NavLink to="/cart" className={styles["menu__href"]}>
+                {({ isActive }) => (
+                  <div className={cn(styles["menu__item"], {
+                    [styles['active']]: isActive
+                  })}>
+                    <div className={styles["menu-icon"]}>
+                      <ShoppingBasket className={styles["icon"]} />
+                    </div>
+                    <p>Корзина</p>
                   </div>
-                  <p>Корзина</p>
-                </div>
-              )}
-            </NavLink>
-            <NavLink to="/orders" className={styles["menu__href"]}>
-              {({isActive}) => (
-                <div className={cn(styles["menu__item"], {
-                  [styles['active']]: isActive
-                })}>
-                  <div className={styles["menu-icon"]}>
-                    <ListOrdered className={styles["icon"]} />
+                )}
+              </NavLink>
+            }
+
+            {
+              user?.user && <NavLink to="/orders" className={styles["menu__href"]}>
+                {({ isActive }) => (
+                  <div className={cn(styles["menu__item"], {
+                    [styles['active']]: isActive
+                  })}>
+                    <div className={styles["menu-icon"]}>
+                      <ListOrdered className={styles["icon"]} />
+                    </div>
+                    <p>Мои заказы</p>
                   </div>
-                  <p>Мои заказы</p>
-                </div>
-              )}
-            </NavLink>
+                )}
+              </NavLink>
+            }
+
           </div>
         </div>
         <div className={styles["turn"]} onClick={menuTurn}>

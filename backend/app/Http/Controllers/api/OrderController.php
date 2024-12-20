@@ -14,7 +14,11 @@ use Illuminate\Support\Facades\DB;
 class OrderController extends Controller
 {
     public function index(){
-        $orders = Order::where('user_id', Auth::id())->with('products')->get();
+        if(Auth::user()->role == 2){
+            $orders = Order::with('products')->get();
+        }else{
+            $orders = Order::where('user_id', Auth::id())->with('products')->get();
+        }
         return OrderResource::collection($orders);
     }
 
@@ -50,5 +54,21 @@ class OrderController extends Controller
     public function show($id){
         $order = Order::where('id', $id)->with('products')->first();
         return new OrderResource($order);
+    }
+
+    public function moveStatus($id){
+        $user = Auth::user();
+
+        if($user->role == 2){
+            $order = Order::find($id);
+            $status = $order->status + 1;
+            $order->update([
+                'status' => $status
+            ]);
+            
+            return response()->json(['data' => $order, 'message' => 'Успех'], 200);
+        }else{
+            return response()->json(['message' => 'Эээ куда лезешь, не можешь ты'], 403);
+        }
     }
 }

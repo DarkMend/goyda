@@ -12,4 +12,8 @@ export const orderService = {
     async getOrder(id:number){
         return axiosWithAuth.get(`/orders/${id}`)
     },
+
+    async moveOrder(id:number){
+        return axiosWithAuth.post(`/orders/move-status/${id}`)
+    }
 }

@@ -6,13 +6,16 @@ import ProductService from '../../services/product.service';
 import Loading from '../../components/Loading/Loading';
 import AddButton from '../../components/AddButton/AddButton';
 import AddProductModal from './AddProductModal';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { modalActions } from '../../store/modal.slice';
 import { IProduct } from '../../interfaces/product.interface';
+import { selectUser, UserState } from '../../store/userSlice';
 
 export default function Catalog() {
 
     const dispatch = useDispatch();
+    const state = useSelector<UserState>(selectUser);
+    const user = state as UserState;
 
     const { data, isLoading } = useQuery({
         queryKey: ['products'],
@@ -29,7 +32,9 @@ export default function Catalog() {
             <AddProductModal />
             <div className={styles['catalog-title']}>
                 <Title>Каталог товаров</Title>
-                <AddButton onClick={openModal} />
+                {
+                    user?.user?.role == 2 && <AddButton onClick={openModal} />
+                }
             </div>
             <div className={styles['catalog__wrapper']}>
                 {

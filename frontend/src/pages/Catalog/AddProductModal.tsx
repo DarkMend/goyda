@@ -3,7 +3,7 @@ import Input from "../../components/Input/Input";
 import ModalLayout from "../../components/ModalLayout/ModalLayout";
 import { IProductForm } from "../../interfaces/productForm.interface";
 import FormLayout from "../../components/FormLayout/FormLayout";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useCreateProduct } from "../../utils/hooks/Product/useCreateProduct";
 import { useQueryClient } from "@tanstack/react-query";
 import InputImage from "../../components/InputImage/InputImage";
@@ -37,6 +37,7 @@ export default function AddProductModal() {
       toast.success('Успешно', {
         autoClose: 5000,
       });
+      queryClient.invalidateQueries({ queryKey: ['products'] });
     },
     onError(error) {
       errorToast(error.response?.data?.message)
@@ -53,10 +54,6 @@ export default function AddProductModal() {
     setActiveInput(true);
     mutate(formData);
   };
-
-  useEffect(() => {
-    isPending ? '' : queryClient.invalidateQueries({ queryKey: ['products'] });
-  }, [isPending])
 
   return (
     <>

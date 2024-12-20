@@ -7,6 +7,7 @@ export interface UserState {
         email: string,
         id: number,
         name: string,
+        role: number,
         cart: IProduct[] | null;
     } | null,
     isAuth: boolean

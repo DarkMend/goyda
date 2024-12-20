@@ -44,6 +44,7 @@ export default function EditProductModal({data}: IEditProductModalProps) {
       toast.success("Успешно", {
         autoClose: 5000,
       });
+      queryClient.invalidateQueries({ queryKey: ["products"] });
     },
     onError(error) {
       errorToast(error.response?.data?.message);
@@ -68,10 +69,6 @@ export default function EditProductModal({data}: IEditProductModalProps) {
     formData.append("id", productId as string);
     mutate(formData);
   };
-
-  useEffect(() => {
-    isPending ? "" : queryClient.invalidateQueries({ queryKey: ["products"] });
-  }, [isPending]);
 
   useEffect(() => {
     reset({

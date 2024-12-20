@@ -16,7 +16,6 @@ import { IProduct } from "../../interfaces/product.interface";
 import { selectUser, UserState } from "../../store/userSlice";
 import cn from 'classnames'
 import { useDeleteCart } from "../../utils/hooks/Cart/useDeleteCart";
-import { useEffect } from "react";
 import { useAddCart } from "../../utils/hooks/Cart/useAddCart";
 
 export default function Product() {
@@ -40,21 +39,25 @@ export default function Product() {
     },
   });
 
-  const { mutate: mutateCartDelete, isPending } = useDeleteCart();
+  const { mutate: mutateCartDelete, } = useDeleteCart({
+    onSuccess() {
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+    }
+  });
 
   const deleteCart = (id: number) => {
     mutateCartDelete(id);
   }
 
-  const { mutate: addCartItem, isPending: isPendingAdd } = useAddCart();
+  const { mutate: addCartItem } = useAddCart({
+    onSuccess() {
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+    }
+  });
 
   const addCart = (id: number) => {
     addCartItem(id);
   }
-
-  useEffect(() => {
-    (isPending || isPendingAdd) ? '' : queryClient.invalidateQueries({ queryKey: ['user'] });
-  }, [isPending, isPendingAdd])
 
   const openModal = () => {
     dispatch(modalActions.setIsActive(!store.getState().modal.isActive));
@@ -74,8 +77,15 @@ export default function Product() {
           <div className={styles["title-wrapper"]}>
             <Title>{data?.name}</Title>
             <div className={styles["admin-actions"]}>
-              <DeleteButton onClick={deleteProduct} />
-              <EditButton onClick={openModal} />
+              {
+                user?.role == 2 && (
+                  <>
+                    <DeleteButton onClick={deleteProduct} />
+                    <EditButton onClick={openModal} />
+                  </>
+                )
+              }
+
             </div>
           </div>
           <div className={styles["product"]}>
@@ -89,7 +99,10 @@ export default function Product() {
               <div className={styles["description"]}>{data?.description}</div>
               <div className={styles["price"]}>{data?.price} р.</div>
               {
-                user ? user.cart?.find((el) => el.id == data?.id) ? <MainButton onClick={() => deleteCart(data?.id as number)} className={cn(styles["button"], styles["delete"])}>Удалить из корзины</MainButton> : <MainButton onClick={() => addCart(data?.id as number)} className={styles["button"]}>В корзину</MainButton> : <MainButton className={styles["button"]}>В корзину</MainButton>
+                user ? user.role != 2 ? user.cart?.find((el) => el.id == data?.id) ? 
+                <MainButton onClick={() => deleteCart(data?.id as number)} className={cn(styles["button"], styles["delete"])}>Удалить из корзины</MainButton> :
+                 <MainButton onClick={() => addCart(data?.id as number)} className={styles["button"]}>В корзину</MainButton> : '' : 
+                 <MainButton className={styles["button"]} onClick={() => navigate('/auth/login')}>В корзину</MainButton>
               }
             </div>
           </div>

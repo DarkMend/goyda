@@ -6,7 +6,6 @@ import cn from 'classnames';
 import { ICartItem } from "./CartItem.props";
 import { useUpdateCartCount } from "../../utils/hooks/Cart/useUpdateCartCount";
 import { useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
 import { useDeleteCart } from "../../utils/hooks/Cart/useDeleteCart";
 
 export interface ICartCount {
@@ -16,10 +15,19 @@ export interface ICartCount {
 
 export default function CartItem({ product, count }: ICartItem) {
 
-    const { mutate, isPending } = useUpdateCartCount();
+    const { mutate } = useUpdateCartCount({
+        onSuccess() {
+            queryClient.invalidateQueries({ queryKey: ['cart'] });
+        }
+    });
     const queryClient = useQueryClient();
 
-    const { mutate: deleteCartItem, isPending: isPendingDelete } = useDeleteCart();
+    const { mutate: deleteCartItem } = useDeleteCart({
+        onSuccess() {
+            queryClient.invalidateQueries({queryKey: ['user']});
+            queryClient.invalidateQueries({ queryKey: ['cart'] });
+        },
+    });
 
     const deleteCart = async (id: number) => {
         deleteCartItem(id);
@@ -28,15 +36,6 @@ export default function CartItem({ product, count }: ICartItem) {
     const updateCount = (data: ICartCount) => {
         mutate(data);
     }
-
-    useEffect(() => {
-        (isPendingDelete) ? '' : queryClient.invalidateQueries({queryKey: ['user']});
-        (isPendingDelete) ? '' : queryClient.invalidateQueries({ queryKey: ['cart'] });
-    }, [isPendingDelete])
-
-    useEffect(() => {
-        (isPending) ? '' : queryClient.invalidateQueries({ queryKey: ['cart'] });
-    }, [isPending])
 
     return (
         <div className={styles['cart-item']}>

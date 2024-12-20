@@ -26,7 +26,7 @@ export default function Orders() {
                                 <h3>В обработке</h3>
                                 <div className={styles['orders-items']}>
                                     {
-                                        data && data?.data.map((el: IOrder) => {
+                                        data && data?.data.filter((el: IOrder) => el.status == 1).map((el: IOrder) => {
                                             return <OrderItem key={el.orderId} data={el} />
                                         })
                                     }
@@ -35,12 +35,21 @@ export default function Orders() {
                             <div className={styles['orders__wrapper-item']}>
                                 <h3>В пути</h3>
                                 <div className={styles['orders-items']}>
-
+                                    {
+                                        data && data?.data.filter((el: IOrder) => el.status == 2).map((el: IOrder) => {
+                                            return <OrderItem key={el.orderId} data={el} />
+                                        })
+                                    }
                                 </div>
                             </div>
                             <div className={styles['orders__wrapper-item']}>
                                 <h3>Выдано</h3>
                                 <div className={styles['orders-items']}>
+                                    {
+                                        data && data?.data.filter((el: IOrder) => el.status == 3).map((el: IOrder) => {
+                                            return <OrderItem key={el.orderId} data={el} />
+                                        })
+                                    }
                                 </div>
                             </div>
                         </div>

@@ -9,7 +9,6 @@ import DeleteButton from '../DeleteButton/DeleteButton'
 import { useDeleteCart } from '../../utils/hooks/Cart/useDeleteCart'
 import { useQueryClient } from '@tanstack/react-query'
 import { useAddCart } from '../../utils/hooks/Cart/useAddCart'
-import { useEffect } from 'react'
 
 export default function CardItem({data}: ICatdItem) {
 
@@ -17,25 +16,25 @@ export default function CardItem({data}: ICatdItem) {
     const {user} = state as UserState;
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useDeleteCart();
+    const { mutate } = useDeleteCart({
+        onSuccess(){
+            queryClient.invalidateQueries({queryKey: ['user']});
+        }
+    });
 
     const deleteCart = async (id: number) => {
         mutate(id);
     }
 
-    const {mutate: addCartItem, isPending: isPendingAdd} = useAddCart();
+    const {mutate: addCartItem} = useAddCart({
+        onSuccess() {
+            queryClient.invalidateQueries({queryKey: ['user']});
+        }
+    });
 
     const addCart = async (id: number) => {
         addCartItem(id);
     }
-
-    useEffect(() => {
-        (isPending) ? '' : queryClient.invalidateQueries({queryKey: ['user']});
-    }, [isPending])
-
-    useEffect(() => {
-        (isPendingAdd) ? '' : queryClient.invalidateQueries({queryKey: ['user']});
-    }, [isPendingAdd])
 
     return (
         <div className={styles['card']}>
@@ -50,7 +49,7 @@ export default function CardItem({data}: ICatdItem) {
                     {data.price} р.
                 </div>
                 {
-                    user ? user.cart?.find((el) => el.id == data?.id) ? <DeleteButton onClick={() => deleteCart(data?.id)} /> : <CartButton onClick={() => addCart(data?.id)} /> : <CartButton /> 
+                    user ? user.role != 2 ? user.cart?.find((el) => el.id == data?.id) ? <DeleteButton onClick={() => deleteCart(data?.id)} /> : <CartButton onClick={() => addCart(data?.id)} /> : '' : <CartButton /> 
                 }
                 
             </div>

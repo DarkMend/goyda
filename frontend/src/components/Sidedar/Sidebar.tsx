@@ -122,7 +122,7 @@ export default function Sidebar() {
               )}
             </NavLink>
             {
-              user?.user && <NavLink to="/cart" className={styles["menu__href"]}>
+              user?.user?.role == 1 && <NavLink to="/cart" className={styles["menu__href"]}>
                 {({ isActive }) => (
                   <div className={cn(styles["menu__item"], {
                     [styles['active']]: isActive
@@ -145,7 +145,11 @@ export default function Sidebar() {
                     <div className={styles["menu-icon"]}>
                       <ListOrdered className={styles["icon"]} />
                     </div>
-                    <p>Мои заказы</p>
+                    <p>
+                      {
+                        user?.user?.role == 1 ? 'Мои заказы' : 'Заказы'
+                      }
+                    </p>
                   </div>
                 )}
               </NavLink>

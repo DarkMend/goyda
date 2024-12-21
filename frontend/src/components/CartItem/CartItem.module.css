@@ -43,7 +43,10 @@
 }
 
 .calc-button{
-    display: block;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     padding: 10px;
     background: #7a7aa3;
     width: 40px;

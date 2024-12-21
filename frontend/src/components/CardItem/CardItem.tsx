@@ -16,7 +16,7 @@ export default function CardItem({data}: ICatdItem) {
     const {user} = state as UserState;
     const queryClient = useQueryClient();
 
-    const { mutate } = useDeleteCart({
+    const { mutate, isPending } = useDeleteCart({
         onSuccess(){
             queryClient.invalidateQueries({queryKey: ['user']});
         }
@@ -26,7 +26,7 @@ export default function CardItem({data}: ICatdItem) {
         mutate(id);
     }
 
-    const {mutate: addCartItem} = useAddCart({
+    const {mutate: addCartItem, isPending: isPendingAdd} = useAddCart({
         onSuccess() {
             queryClient.invalidateQueries({queryKey: ['user']});
         }
@@ -49,7 +49,7 @@ export default function CardItem({data}: ICatdItem) {
                     {data.price} р.
                 </div>
                 {
-                    user ? user.role != 2 ? user.cart?.find((el) => el.id == data?.id) ? <DeleteButton onClick={() => deleteCart(data?.id)} /> : <CartButton onClick={() => addCart(data?.id)} /> : '' : <CartButton /> 
+                    user ? user.role != 2 ? user.cart?.find((el) => el.id == data?.id) ? <DeleteButton loading={isPending} onClick={() => deleteCart(data?.id)} /> : <CartButton loading={isPendingAdd} onClick={() => addCart(data?.id)} /> : '' : <CartButton /> 
                 }
                 
             </div>

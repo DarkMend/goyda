@@ -23,7 +23,7 @@ export default function Cart() {
         select: data => data?.data
     })
 
-    const { mutate } = useAddOrder({
+    const { mutate, isPending } = useAddOrder({
         onSuccess() {
             navigate('/orders');
         }
@@ -68,7 +68,7 @@ export default function Cart() {
                         <div className={styles['price']}>
                             Общая стоимость: {allPrice}
                         </div>
-                        <MainButton className={styles['result-button']} onClick={addOrder}>Оформить заказ</MainButton>
+                        <MainButton className={styles['result-button']} onClick={addOrder} disabled={isPending}>Оформить заказ</MainButton>
                     </div>
             }
         </div>

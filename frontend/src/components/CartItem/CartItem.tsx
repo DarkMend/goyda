@@ -7,6 +7,7 @@ import { ICartItem } from "./CartItem.props";
 import { useUpdateCartCount } from "../../utils/hooks/Cart/useUpdateCartCount";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDeleteCart } from "../../utils/hooks/Cart/useDeleteCart";
+import { MoonLoader } from "react-spinners";
 
 export interface ICartCount {
     id: number,
@@ -15,14 +16,14 @@ export interface ICartCount {
 
 export default function CartItem({ product, count }: ICartItem) {
 
-    const { mutate } = useUpdateCartCount({
+    const { mutate, isPending: isPendingUpdate } = useUpdateCartCount({
         onSuccess() {
             queryClient.invalidateQueries({ queryKey: ['cart'] });
         }
     });
     const queryClient = useQueryClient();
 
-    const { mutate: deleteCartItem } = useDeleteCart({
+    const { mutate: deleteCartItem, isPending } = useDeleteCart({
         onSuccess() {
             queryClient.invalidateQueries({queryKey: ['user']});
             queryClient.invalidateQueries({ queryKey: ['cart'] });
@@ -53,18 +54,22 @@ export default function CartItem({ product, count }: ICartItem) {
                 <div className={styles['title']}>
                     {product.price} р.
                 </div>
-                <DeleteButton onClick={() => deleteCart(product?.id)} />
+                <DeleteButton loading={isPending} onClick={() => deleteCart(product?.id)} />
                 <div className={styles['calc']}>
                     <button className={cn(styles['calc-button'], styles['min'], {
                         [styles['disabled']]: count == 1
-                    })} disabled={count == 1 && true} onClick={() => updateCount({ id: product.id, count: count - 1 })}>
-                        <Minus className={styles['calc-button__icon']} />
+                    })} disabled={count == 1} onClick={() => updateCount({ id: product.id, count: count - 1 })}>
+                        {
+                            isPendingUpdate ? <MoonLoader size={16} color='#fff'/> : <Minus className={styles['calc-button__icon']} />
+                        }
                     </button>
                     <div className={styles['window']}>
                         {count}
                     </div>
                     <button className={cn(styles['calc-button'], styles['pls'])} onClick={() => updateCount({ id: product.id, count: count + 1 })}>
-                        <Plus className={cn(styles['calc-button__icon'])} />
+                        {
+                            isPendingUpdate ? <MoonLoader size={16} color='#fff'/> : <Plus className={cn(styles['calc-button__icon'])} />
+                        }
                     </button>
                 </div>
             </div>

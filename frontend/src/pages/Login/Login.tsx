@@ -67,7 +67,7 @@ export default function Login() {
                     activeInput={activeInput}
                 />
             </FormLayout>
-            <div>Нет аккаунта - <Link to={'/auth/reg'}>Регистрация</Link></div>
+            <div className={styles['account']}>Нет аккаунта - <Link to={'/auth/reg'}>Регистрация</Link></div>
         </div>
     )
 }

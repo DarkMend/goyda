@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import CartButton from '../CartButton/CartButton'
 import MainButton from '../MainButton/MainButton'
 import styles from './CardItem.module.css'
@@ -15,6 +15,7 @@ export default function CardItem({data}: ICatdItem) {
     const state = useSelector<UserState>(selectUser);
     const {user} = state as UserState;
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
 
     const { mutate, isPending } = useDeleteCart({
         onSuccess(){
@@ -49,7 +50,7 @@ export default function CardItem({data}: ICatdItem) {
                     {data.price} р.
                 </div>
                 {
-                    user ? user.role != 2 ? user.cart?.find((el) => el.id == data?.id) ? <DeleteButton loading={isPending} onClick={() => deleteCart(data?.id)} /> : <CartButton loading={isPendingAdd} onClick={() => addCart(data?.id)} /> : '' : <CartButton /> 
+                    user ? user.role != 2 ? user.cart?.find((el) => el.id == data?.id) ? <DeleteButton loading={isPending} onClick={() => deleteCart(data?.id)} /> : <CartButton loading={isPendingAdd} onClick={() => addCart(data?.id)} /> : '' : <CartButton onClick={() => navigate('/auth/login')}/> 
                 }
                 
             </div>

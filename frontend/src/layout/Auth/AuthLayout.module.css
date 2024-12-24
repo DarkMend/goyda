@@ -1,7 +1,49 @@
 .auth{
     display: flex;
+    flex: 1;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
+}
+
+.auth-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100vh;
+}
+
+.video__wrapper{
+    overflow: hidden;
+    flex: 1;
+    position: relative;
+    height: 100vh;
+}
+
+.video{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.title{
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.6);
+    top: 0;
+    left: 0;
+}
+
+.title img{
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }

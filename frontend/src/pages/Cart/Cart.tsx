@@ -61,7 +61,8 @@ export default function Cart() {
                     data?.data.map((el: ICartItem) => <CartItem key={el.product.id} product={el.product} count={el.count} />)
                 }
             </div>
-            {
+            {  
+                isLoading ? '' : 
                 data?.data.length == 0 ? '' :
 
                     <div className={styles['result']}>

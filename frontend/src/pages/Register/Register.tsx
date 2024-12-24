@@ -74,7 +74,7 @@ export default function Register() {
                     activeInput={activeInput}
                 />
             </FormLayout>
-            <div>Есть аккаунт - <Link to={'/auth/login'}>Войти</Link></div>
+            <div className={styles['account']}>Есть аккаунт - <Link to={'/auth/login'}>Войти</Link></div>
         </div>
     )
 }

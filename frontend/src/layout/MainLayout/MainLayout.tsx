@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 export default function MainLayout() {
     return (
         <div className={styles['main-layout']}>
-            <div className="sidebar">
+            <div className={styles['sidebar']}>
                 <Sidebar />
             </div>
             <div className={styles['page']}>

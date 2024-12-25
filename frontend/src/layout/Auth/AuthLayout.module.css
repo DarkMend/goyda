@@ -47,3 +47,9 @@
     top: 50%;
     transform: translate(-50%, -50%);
 }
+
+@media (max-width: 900px) {
+    .video__wrapper{
+        display: none;
+    }
+}

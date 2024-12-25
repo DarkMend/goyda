@@ -147,3 +147,55 @@
     background: none;
     border: none;
 }
+
+@media (max-width: 900px) {
+    .sidebar{
+        top: initial;
+        bottom: 0;
+        width: 100%;
+        min-height: 70px !important;
+        height: 70px;
+        z-index: 2;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px 10px 0px 0px;
+    }
+
+    .genjutsu{
+        display: none;
+    }
+
+    .turn{
+        display: none;
+    }
+
+    .menu{
+        flex-direction: row;
+    }
+
+    .sidebar__wrapper{
+        flex-direction: row;
+        width: initial;
+    }
+
+    .line{
+        display: none;
+    }
+
+    .menu__item p{
+        display: none;
+    }
+
+    .menu__href{
+        width: initial
+    }
+
+    .head-logo p {
+        display: none;
+    }
+
+    .head-logo{
+        position: absolute;
+        left: 20px;
+    }
+}

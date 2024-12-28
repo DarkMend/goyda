@@ -6,6 +6,7 @@ import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import '../../index.css'
 import cn from 'classnames'
+import MainButton from '../../components/MainButton/MainButton';
 
 export default function Main() {
 
@@ -26,7 +27,9 @@ export default function Main() {
                             <h3 className={styles['h3']}>
                                 ИНТЕРЕСНЫ КАРЛИКИ И ДРАКОНЫ?
                                 ТОГДА ЭТО ДЛЯ ТЕБЯ
+                                <MainButton>КАТАЛОГ</MainButton>
                             </h3>
+                            
                         </div>
                     </SwiperSlide>
                     <SwiperSlide className={cn(styles['slider'], styles['sl2'])}>
@@ -34,8 +37,9 @@ export default function Main() {
                             <div className={styles['img']}>
                                 <img src="/slider/sl2.png" alt="" />
                             </div>
-                            <h3 className={styles['h3']}>
+                            <h3 className={cn(styles['h3'], styles['h3-sl2'])}>
                                 ХОЧЕШЬ ПОБЫВАТЬ БРИТАНСКИМ КОЛОНИЗАТОРОМ?
+                                <MainButton>КАТАЛОГ</MainButton>
                             </h3>
                         </div>
                     </SwiperSlide>

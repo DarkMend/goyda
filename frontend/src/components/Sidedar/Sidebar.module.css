@@ -148,7 +148,7 @@
     border: none;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
     .sidebar{
         top: initial;
         bottom: 0;

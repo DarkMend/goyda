@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
+    height: 80vh;
 }
 
 .result-button{
@@ -11,7 +12,7 @@
 
 .result{
     position: absolute;
-    bottom: 30px;
+    bottom: 80px;
     display: flex;
     flex-direction: column;
     gap: 15px;

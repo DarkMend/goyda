@@ -16,7 +16,7 @@ export default function Orders() {
 
     return (
         <>
-            <Title>Мои заказы</Title>
+            <Title>Заказы</Title>
             {
                 isLoading ? <Loading /> :
 

@@ -62,7 +62,7 @@ export default function Cart() {
                 }
             </div>
             {  
-                isLoading ? '' : 
+                isLoading ? '' :   
                 data?.data.length == 0 ? '' :
 
                     <div className={styles['result']}>

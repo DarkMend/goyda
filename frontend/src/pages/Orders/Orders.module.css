@@ -16,3 +16,10 @@
     gap: 30px;
     margin-top: 20px;
 }
+
+@media (max-width: 900px) {
+    .orders__wrapper{
+        flex-direction: column;
+        margin-bottom: 60px;
+    }
+}

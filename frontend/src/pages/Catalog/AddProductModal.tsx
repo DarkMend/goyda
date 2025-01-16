@@ -105,7 +105,8 @@ export default function AddProductModal() {
             }
             activeInput={activeInput}
 
-          />
+          />          
+          
         </FormLayout>
       </ModalLayout>
     </>

@@ -67,7 +67,7 @@ export default function Cart() {
 
                     <div className={styles['result']}>
                         <div className={styles['price']}>
-                            Общая стоимость: {allPrice}
+                            Общая стоимость: {allPrice} руб.
                         </div>
                         <MainButton className={styles['result-button']} onClick={addOrder} disabled={isPending}>Оформить заказ</MainButton>
                     </div>

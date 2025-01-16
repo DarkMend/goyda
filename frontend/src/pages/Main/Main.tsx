@@ -7,6 +7,7 @@ import { Pagination } from 'swiper/modules';
 import '../../index.css'
 import cn from 'classnames'
 import MainButton from '../../components/MainButton/MainButton';
+import { Link } from 'react-router-dom';
 
 export default function Main() {
 
@@ -27,9 +28,9 @@ export default function Main() {
                             <h3 className={styles['h3']}>
                                 ИНТЕРЕСНЫ КАРЛИКИ И ДРАКОНЫ?
                                 ТОГДА ЭТО ДЛЯ ТЕБЯ
-                                <MainButton>КАТАЛОГ</MainButton>
+                                <Link to='/products'><MainButton>КАТАЛОГ</MainButton></Link>
                             </h3>
-                            
+
                         </div>
                     </SwiperSlide>
                     <SwiperSlide className={cn(styles['slider'], styles['sl2'])}>
@@ -39,7 +40,7 @@ export default function Main() {
                             </div>
                             <h3 className={cn(styles['h3'], styles['h3-sl2'])}>
                                 ХОЧЕШЬ ПОБЫВАТЬ БРИТАНСКИМ КОЛОНИЗАТОРОМ?
-                                <MainButton>КАТАЛОГ</MainButton>
+                                <Link to='/products'><MainButton>КАТАЛОГ</MainButton></Link>
                             </h3>
                         </div>
                     </SwiperSlide>

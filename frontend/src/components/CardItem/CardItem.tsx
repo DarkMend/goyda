@@ -47,7 +47,7 @@ export default function CardItem({data}: ICatdItem) {
             </div>
             <div className={styles['card-wrapper']}>
                 <div className={styles['price']}>
-                    {data.price} р.
+                    {data.price} руб.
                 </div>
                 {
                     user ? user.role != 2 ? user.cart?.find((el) => el.id == data?.id) ? <DeleteButton loading={isPending} onClick={() => deleteCart(data?.id)} /> : <CartButton loading={isPendingAdd} onClick={() => addCart(data?.id)} /> : '' : <CartButton onClick={() => navigate('/auth/login')}/> 

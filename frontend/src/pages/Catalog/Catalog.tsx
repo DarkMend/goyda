@@ -36,6 +36,13 @@ export default function Catalog() {
                     user?.user?.role == 2 && <AddButton onClick={openModal} />
                 }
             </div>
+            <div className={styles['categories']}>
+                <button>Все</button>
+                <button>Карточные</button>
+                <button>Кости</button>
+                <button>Не кости</button>
+
+            </div>
             <div className={styles['catalog__wrapper']}>
                 {
                     isLoading ? <Loading /> :

@@ -20,6 +20,21 @@
     gap: 30px;
 }
 
+.categories{
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.categories button{
+    display: block;
+    background: none;
+    border: none;
+    font-size: 18px;
+}
+
 @media (max-width: 800px) {
     .catalog__wrapper{
         place-items: center;

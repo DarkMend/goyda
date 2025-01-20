@@ -52,6 +52,16 @@ export default function Orders() {
                                     }
                                 </div>
                             </div>
+                            <div className={styles['orders__wrapper-item']}>
+                                <h3>Отказано</h3>
+                                <div className={styles['orders-items']}>
+                                    {
+                                        data && data?.data.filter((el: IOrder) => el.status == 4).map((el: IOrder) => {
+                                            return <OrderItem key={el.orderId} data={el} />
+                                        })
+                                    }
+                                </div>
+                            </div>
                         </div>
                     </div>
             }

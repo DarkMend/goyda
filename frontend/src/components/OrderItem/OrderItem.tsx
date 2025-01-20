@@ -61,7 +61,7 @@ export default function OrderItem({ data, ...props }: IOrderItem) {
                 </div>
             </Link>
             {
-                user?.role == 2 && data.status != 3 &&
+                user?.role == 2 && data.status != 3 && data.status != 4 &&
                 <div className={styles['buttons']}>
                     {data.status != 2 && <button className={styles['button-img']} onClick={() => orderClose(data.orderId)} ><X /></button>}
                     <button className={styles['button-img']} onClick={() => moveOrder(data.orderId)}>

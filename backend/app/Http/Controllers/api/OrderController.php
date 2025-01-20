@@ -71,4 +71,19 @@ class OrderController extends Controller
             return response()->json(['message' => 'Эээ куда лезешь, не можешь ты'], 403);
         }
     }
+
+    public function closeOrder($id){
+        $user = Auth::user();
+
+        if($user->role == 2){
+            $order = Order::find($id);
+            $order->update([
+                'status' => 4
+            ]);
+            
+            return response()->json(['data' => $order, 'message' => 'Успех'], 200);
+        }else{
+            return response()->json(['message' => 'Эээ куда лезешь, не можешь ты'], 403);
+        }
+    }
 }

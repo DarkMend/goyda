@@ -4,9 +4,10 @@ import { IProduct } from '../../interfaces/product.interface'
 import { IOrderItem } from './OrderItem.props'
 import { useSelector } from 'react-redux'
 import { selectUser, UserState } from '../../store/userSlice'
-import { MoveRight } from 'lucide-react'
+import { MoveRight, X } from 'lucide-react'
 import { useMoveOrder } from '../../utils/hooks/Admin/useMoveOrder'
 import { useQueryClient } from '@tanstack/react-query'
+import { useOrderClose } from '../../utils/hooks/Admin/useOrderClose'
 
 
 export default function OrderItem({ data, ...props }: IOrderItem) {
@@ -15,21 +16,31 @@ export default function OrderItem({ data, ...props }: IOrderItem) {
     const { user } = state as UserState;
     const queryClient = useQueryClient();
 
-    const {mutate} = useMoveOrder({
+    const { mutate } = useMoveOrder({
         onSuccess() {
-            queryClient.invalidateQueries({queryKey:['orders']});
+            queryClient.invalidateQueries({ queryKey: ['orders'] });
         }
     });
 
-    const moveOrder = (id:number) => {
+    const { mutate: closeOrderMutate } = useOrderClose({
+        onSuccess() {
+            queryClient.invalidateQueries({ queryKey: ['orders'] });
+        }
+    })
+
+    const moveOrder = (id: number) => {
         mutate(id);
+    }
+
+    const orderClose = (id: number) => {
+        closeOrderMutate(id);
     }
 
     return (
         <div className={styles['oredrs-item']} {...props}>
             <div className={styles['orders-item__title']}>
                 <p>Заказ: {data.orderId}</p>
-                <p>Сумма: {data.amount}</p>
+                <p>Сумма: {data.amount} руб.</p>
             </div>
             {
                 user?.role == 2 &&
@@ -51,9 +62,13 @@ export default function OrderItem({ data, ...props }: IOrderItem) {
             </Link>
             {
                 user?.role == 2 && data.status != 3 &&
-                <button className={styles['button-arrow']} onClick={() => moveOrder(data.orderId)}>
-                    <MoveRight />
-                </button>
+                <div className={styles['buttons']}>
+                    {data.status != 2 && <button className={styles['button-img']} onClick={() => orderClose(data.orderId)} ><X /></button>}
+                    <button className={styles['button-img']} onClick={() => moveOrder(data.orderId)}>
+                        <MoveRight />
+                    </button>
+                </div>
+
             }
         </div>
     )

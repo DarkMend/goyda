@@ -52,4 +52,5 @@ Route::middleware(['middleware'=>'auth:sanctum'])->controller(OrderController::c
     Route::post('', 'store');
     Route::get('/{id}', 'show');
     Route::post('/move-status/{id}', 'moveStatus');
+    Route::post('/close-order/{id}', 'closeOrder');
 });

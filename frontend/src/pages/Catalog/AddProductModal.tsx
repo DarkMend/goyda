@@ -104,9 +104,16 @@ export default function AddProductModal() {
               (errors.price && errors.price.message)
             }
             activeInput={activeInput}
+          />
+          <select {
+            ...register('category')
+          }
+            name="category" style={{ display: 'flex', width: '100%', padding: '15px', borderRadius: '10px', border: '2px solid black' }}>
+            <option value="1">Стратегии</option>
+            <option value="2">Карточные</option>
+            <option value="3">Классические</option>
+          </select>
 
-          />          
-          
         </FormLayout>
       </ModalLayout>
     </>

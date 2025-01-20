@@ -33,6 +33,11 @@
     background: none;
     border: none;
     font-size: 18px;
+    cursor: pointer;
+}
+
+.categories button.active {
+    color: #E5D81B;
 }
 
 @media (max-width: 800px) {

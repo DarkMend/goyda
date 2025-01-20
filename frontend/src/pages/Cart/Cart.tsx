@@ -5,7 +5,7 @@ import CartItem from '../../components/CartItem/CartItem';
 // import { useSelector } from 'react-redux';
 // import { selectUser, UserState } from '../../store/userSlice';
 // import { IProduct } from '../../interfaces/product.interface';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Loading from '../../components/Loading/Loading';
 import { ICartItem } from '../../components/CartItem/CartItem.props';
 import { cartService } from '../../services/cart.service';
@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Cart() {
     const [allPrice, setAllPrice] = useState(0);
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
 
     const { data, isLoading } = useQuery({
         queryKey: ['cart'],
@@ -43,8 +44,9 @@ export default function Cart() {
         setAllPrice(price);
     }, [data]);
 
-    const addOrder = () => {
+    const addOrder = async () => {
         mutate(null);
+        await queryClient.invalidateQueries({queryKey: 'user'});
     }
 
     return (

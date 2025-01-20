@@ -15,5 +15,9 @@ export const orderService = {
 
     async moveOrder(id:number){
         return axiosWithAuth.post(`/orders/move-status/${id}`)
+    },
+    
+    async orderClose(id:number){
+        return axiosWithAuth.post(`/orders/close-order/${id}`);
     }
 }

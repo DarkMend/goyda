@@ -3,7 +3,8 @@ export interface IProduct {
     name: string,
     description: string,
     img: string,
-    price: number
+    price: number,
+    category: number
 }
 
 type WithData<T> = { data: T }

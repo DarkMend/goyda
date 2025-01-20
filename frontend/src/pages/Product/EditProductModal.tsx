@@ -12,15 +12,19 @@ import "react-toastify/dist/ReactToastify.css";
 import Toaster from "../../components/Toaster/Toaster";
 import { useParams } from "react-router-dom";
 import { IProduct } from "../../interfaces/product.interface";
+import { useDispatch } from "react-redux";
+import { modalActions } from "../../store/modal.slice";
+import { store } from "../../store/store";
 
 export interface IEditProductModalProps {
   data: IProduct
 }
 
-export default function EditProductModal({data}: IEditProductModalProps) {
+export default function EditProductModal({ data }: IEditProductModalProps) {
   const [activeInput, setActiveInput] = useState(false);
   const queryClient = useQueryClient();
   const { productId } = useParams();
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -62,8 +66,8 @@ export default function EditProductModal({data}: IEditProductModalProps) {
 
     if (data.img.length == 0) {
       formData.append("img", "");
-    }else{
-        formData.append('img', data.img[0]);
+    } else {
+      formData.append('img', data.img[0]);
     }
 
     formData.append("id", productId as string);
@@ -74,9 +78,11 @@ export default function EditProductModal({data}: IEditProductModalProps) {
     reset({
       name: data.name,
       description: data.description,
-      price: data.price
+      price: data.price,
+      category: data.category
     })
     setActiveInput(true);
+    dispatch(modalActions.setIsActive(!store.getState().modal.isActive))
   }, [data])
 
   return (
@@ -124,6 +130,14 @@ export default function EditProductModal({data}: IEditProductModalProps) {
             errorActive={errors.price && errors.price.message}
             activeInput={activeInput}
           />
+          <select {
+            ...register('category')
+          }
+           defaultValue={data.category}  style={{ display: 'flex', width: '100%', padding: '15px', borderRadius: '10px', border: '2px solid black' }}>
+            <option value="1">Стратегии</option>
+            <option value="2">Карточные</option>
+            <option value="3">Классические</option>
+          </select>
         </FormLayout>
       </ModalLayout>
     </>

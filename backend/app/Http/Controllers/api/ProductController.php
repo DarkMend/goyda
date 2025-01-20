@@ -53,7 +53,8 @@ class ProductController extends Controller
             'name' => ['required'],
             'description' => ['required'],
             'img' => ['required', 'mimes:jpg,jpeg,png'],
-            'price' => ['required', 'integer']
+            'price' => ['required', 'integer'],
+            'category' => ['required']
         ]);
 
         $image = $request->file('img')->store('products');
@@ -75,7 +76,8 @@ class ProductController extends Controller
             'name' => ['required'],
             'description' => ['required'],
             'img' => ['nullable', 'mimes:jpg,jpeg,png', 'image'],
-            'price' => ['required', 'integer']
+            'price' => ['required', 'integer'],
+            'category' => ['required']
         ]);
 
         if ($data['img'] == null) {

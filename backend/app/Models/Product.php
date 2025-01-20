@@ -10,7 +10,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'img', 'price'];
+    protected $fillable = ['name', 'description', 'img', 'price', 'category'];
 
     function getImageUrl(){
         return Storage::url($this->img);

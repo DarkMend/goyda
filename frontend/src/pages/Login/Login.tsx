@@ -63,6 +63,7 @@ export default function Login() {
                     {...register("password", {
                         required: "Заполните название",
                     })}
+                    type='password'
                     errorActive={errors.password && errors.password.message}
                     activeInput={activeInput}
                 />
